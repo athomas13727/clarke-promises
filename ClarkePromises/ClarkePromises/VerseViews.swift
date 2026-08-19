@@ -10,7 +10,9 @@ struct ReaderVerseBlock: View {
     @ScaledMetric(relativeTo: .body) private var verseSize: CGFloat = 19
     @ScaledMetric(relativeTo: .body) private var verseLine: CGFloat = 28
     @ScaledMetric(relativeTo: .footnote) private var citationSize: CGFloat = 13
-    @ScaledMetric(relativeTo: .body) private var starSize: CGFloat = 17
+    @ScaledMetric(relativeTo: .body) private var markSize: CGFloat = 17
+
+    private let controlHit: CGFloat = 44
 
     @State private var showingTranslations = false
 
@@ -22,8 +24,17 @@ struct ReaderVerseBlock: View {
                 .lineSpacing(max(0, verseLine - verseSize))
                 .fixedSize(horizontal: false, vertical: true)
 
-            citationLine
-                .padding(.top, 10)
+            HStack(alignment: .center, spacing: 4) {
+                Text(verse.displayRef)
+                    .font(AppAppearance.citationSerif(citationSize))
+                    .foregroundStyle(AppAppearance.inkSecondary)
+                Spacer(minLength: 8)
+                HStack(spacing: 10 - (controlHit - markSize)) {
+                    FavoriteStarButton(verse: verse, themeID: themeID, pointSize: markSize)
+                    otherTranslationsButton
+                }
+            }
+            .padding(.top, 10)
         }
         .padding(.horizontal, emphasized ? 8 : 0)
         .background {
@@ -40,41 +51,17 @@ struct ReaderVerseBlock: View {
         }
     }
 
-    private var citationLine: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(alignment: .center, spacing: 8) {
-                citationText
-                    .fixedSize(horizontal: true, vertical: true)
-                Spacer(minLength: 8)
-                FavoriteStarButton(verse: verse, themeID: themeID, pointSize: starSize)
-                otherTranslationsButton
-            }
-            VStack(alignment: .trailing, spacing: 0) {
-                HStack(alignment: .center, spacing: 8) {
-                    citationText
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    FavoriteStarButton(verse: verse, themeID: themeID, pointSize: starSize)
-                }
-                otherTranslationsButton
-            }
-        }
-    }
-
-    private var citationText: some View {
-        Text(verse.displayRef)
-            .font(AppAppearance.citationSerif(citationSize))
-            .foregroundStyle(AppAppearance.inkSecondary)
-    }
-
     private var otherTranslationsButton: some View {
         Button {
             showingTranslations = true
         } label: {
-            Text("Other translations")
-                .font(AppAppearance.uiSans(12, weight: .medium))
+            Image(systemName: "link")
+                .font(AppAppearance.uiSans(markSize, weight: .regular))
                 .foregroundStyle(AppAppearance.inkSecondary)
+                .frame(width: controlHit, height: controlHit)
+                .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CitationControlPressStyle())
         .accessibilityLabel("Other translations")
     }
 
