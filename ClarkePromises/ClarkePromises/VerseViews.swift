@@ -1,3 +1,4 @@
+import SafariServices
 import SwiftData
 import SwiftUI
 
@@ -9,10 +10,11 @@ struct ReaderVerseBlock: View {
     @ScaledMetric(relativeTo: .body) private var verseSize: CGFloat = 19
     @ScaledMetric(relativeTo: .body) private var verseLine: CGFloat = 28
     @ScaledMetric(relativeTo: .footnote) private var citationSize: CGFloat = 13
-    @ScaledMetric(relativeTo: .caption) private var esvSize: CGFloat = 12
-    @ScaledMetric(relativeTo: .body) private var starSize: CGFloat = 17
+    @ScaledMetric(relativeTo: .body) private var markSize: CGFloat = 17
 
-    @Environment(\.openURL) private var openURL
+    private let controlHit: CGFloat = 44
+
+    @State private var showingTranslations = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -27,18 +29,10 @@ struct ReaderVerseBlock: View {
                     .font(AppAppearance.citationSerif(citationSize))
                     .foregroundStyle(AppAppearance.inkSecondary)
                 Spacer(minLength: 8)
-                FavoriteStarButton(verse: verse, themeID: themeID, pointSize: starSize)
-                Button {
-                    openURL(ESVLink.esvOrgURL(for: verse))
-                } label: {
-                    Text("ESV")
-                        .font(AppAppearance.uiSans(esvSize, weight: .medium))
-                        .foregroundStyle(AppAppearance.inkSecondary)
-                        .frame(minWidth: 44, minHeight: 44)
-                        .contentShape(Rectangle())
+                HStack(spacing: 10 - (controlHit - markSize)) {
+                    FavoriteStarButton(verse: verse, themeID: themeID, pointSize: markSize)
+                    otherTranslationsButton
                 }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Open in ESV")
             }
             .padding(.top, 10)
         }
@@ -49,6 +43,25 @@ struct ReaderVerseBlock: View {
                     .padding(.horizontal, -8)
             }
         }
+        .sheet(isPresented: $showingTranslations) {
+            OtherTranslationsSheet(verse: verse)
+                .presentationDetents([.medium])
+                .presentationBackground(AppAppearance.parchment)
+        }
+    }
+
+    private var otherTranslationsButton: some View {
+        Button {
+            showingTranslations = true
+        } label: {
+            Image(systemName: "link")
+                .font(AppAppearance.uiSans(markSize, weight: .regular))
+                .foregroundStyle(AppAppearance.inkSecondary)
+                .frame(width: controlHit, height: controlHit)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(CitationControlPressStyle())
+        .accessibilityLabel("Other translations")
     }
 
     /// Running KJV only: no wrapping quotes, no leading in-text verse numbers.
@@ -119,4 +132,81 @@ struct FavoriteStarButton: View {
     private var isFavorite: Bool {
         FavoritesStore.isFavorite(verse.osis, in: favorites)
     }
+}
+
+/// Finger-down wash on the 44pt hit, same token as the TOC wash.
+private struct CitationControlPressStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background {
+                AppAppearance.highlight
+                    .opacity(configuration.isPressed ? 1 : 0)
+            }
+            .animation(nil, value: configuration.isPressed)
+    }
+}
+
+private struct OtherTranslationsSheet: View {
+    let verse: CatalogVerse
+    @State private var safariPage: SafariPage?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("Other translations")
+                .font(AppAppearance.uiSans(13))
+                .foregroundStyle(AppAppearance.inkSecondary)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 20)
+                .padding(.bottom, 16)
+
+            ForEach(BibleGatewayVersion.allCases) { version in
+                Button {
+                    safariPage = SafariPage(url: ESVLink.bibleGatewayURL(for: verse, version: version))
+                } label: {
+                    HStack(spacing: 12) {
+                        Text(version.rawValue)
+                            .font(AppAppearance.uiSans(17))
+                            .foregroundStyle(AppAppearance.ink)
+                        Spacer(minLength: 8)
+                        Image(systemName: "arrow.up.right")
+                            .font(AppAppearance.uiSans(13, weight: .medium))
+                            .foregroundStyle(AppAppearance.inkSecondary)
+                    }
+                    .padding(.horizontal, 22)
+                    .padding(.vertical, 14)
+                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(CitationControlPressStyle())
+
+                if version != .niv {
+                    AppAppearance.hairline
+                        .frame(height: 1)
+                }
+            }
+
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(AppAppearance.parchment)
+        .sheet(item: $safariPage) { page in
+            SafariView(url: page.url)
+                .ignoresSafeArea()
+        }
+    }
+}
+
+private struct SafariPage: Identifiable {
+    let url: URL
+    var id: String { url.absoluteString }
+}
+
+private struct SafariView: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        SFSafariViewController(url: url)
+    }
+
+    func updateUIViewController(_ controller: SFSafariViewController, context: Context) {}
 }

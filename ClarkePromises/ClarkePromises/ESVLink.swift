@@ -1,6 +1,15 @@
 import Foundation
 
-/// Builds outbound links to ESV text hosted elsewhere.
+/// Outbound Bible Gateway versions. Never fetch or store these wordings in-app.
+enum BibleGatewayVersion: String, CaseIterable, Identifiable {
+    case esv = "ESV"
+    case nasb = "NASB"
+    case niv = "NIV"
+
+    var id: String { rawValue }
+}
+
+/// Builds outbound links to licensed text hosted elsewhere.
 /// This app never downloads, caches, or stores ESV (or NASB/NIV/NET) wording.
 enum ESVLink {
     static func esvOrgURL(for verse: CatalogVerse) -> URL {
@@ -32,6 +41,41 @@ enum ESVLink {
         case "Song of Solomon": return "Song+of+Solomon"
         default: return book.replacingOccurrences(of: " ", with: "+")
         }
+    }
+
+    /// Bible Gateway passage page. Search is the reference only — no translation text.
+    static func bibleGatewayURL(for verse: CatalogVerse, version: BibleGatewayVersion) -> URL {
+        bibleGatewayURL(
+            book: verse.book,
+            chapter: verse.chapter,
+            verse: verse.verse,
+            endVerse: verse.endVerse,
+            version: version
+        )
+    }
+
+    static func bibleGatewayURL(
+        book: String,
+        chapter: Int,
+        verse: Int,
+        endVerse: Int?,
+        version: BibleGatewayVersion
+    ) -> URL {
+        let search: String
+        if let endVerse, endVerse != verse {
+            search = "\(book) \(chapter):\(verse)-\(endVerse)"
+        } else {
+            search = "\(book) \(chapter):\(verse)"
+        }
+        var comps = URLComponents()
+        comps.scheme = "https"
+        comps.host = "www.biblegateway.com"
+        comps.path = "/passage/"
+        comps.queryItems = [
+            URLQueryItem(name: "search", value: search),
+            URLQueryItem(name: "version", value: version.rawValue),
+        ]
+        return comps.url!
     }
 
     static func youVersionCode(_ book: String) -> String {
