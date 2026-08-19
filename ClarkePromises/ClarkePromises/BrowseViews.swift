@@ -11,26 +11,23 @@ struct BrowseView: View {
                 ForEach(catalog.parts) { part in
                     TOCPartSection(part: part, collapsedChapters: $collapsedChapters)
                 }
+
+                Button("About") {
+                    showingAbout = true
+                }
+                .font(AppAppearance.uiSans(13))
+                .foregroundStyle(AppAppearance.accent)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 8)
+                .accessibilityLabel("About this app")
             }
             .padding(.horizontal, 36)
             .padding(.top, 20)
             .padding(.bottom, 64)
         }
-        .background(AppAppearance.parchment.ignoresSafeArea())
+        .readerChrome()
         .navigationTitle("Precious Promises")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(AppAppearance.parchment, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showingAbout = true
-                } label: {
-                    Image(systemName: "info.circle")
-                }
-                .accessibilityLabel("About")
-            }
-        }
         .sheet(isPresented: $showingAbout) {
             NavigationStack {
                 AboutView()
@@ -40,6 +37,8 @@ struct BrowseView: View {
                         }
                     }
             }
+            .tint(AppAppearance.accent)
+            .presentationBackground(AppAppearance.parchment)
         }
         .navigationDestination(for: ThemeRoute.self) { route in
             ThemePageView(route: route)
@@ -230,7 +229,7 @@ private struct ThemeReader: View {
                 } label: {
                     Text(catalog.locationLabel(for: theme))
                         .font(AppAppearance.uiSans(11, weight: .semibold))
-                        .foregroundStyle(AppAppearance.parchment)
+                        .foregroundStyle(AppAppearance.locationPillText)
                         .lineLimit(1)
                         .minimumScaleFactor(0.75)
                         .padding(.horizontal, 12)

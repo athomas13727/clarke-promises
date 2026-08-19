@@ -11,7 +11,7 @@ There are **no ads, no tracking, no analytics, and no accounts**. Favorites are 
 - **Star** favorites (SwiftData, on-device); favorites return to the same theme page
 - Each verse shows **public-domain KJV** on the theme page (serif text, reference after the verse)
 - **Open in ESV** is a quiet per-verse control (`esv.org`, or bible.com translation id 59). ESV wording is never bundled, cached, or stored
-- Tabs: Browse, Search, Favorites. About is the trailing info button on Browse
+- Tabs: Browse, Search, Favorites. About is a small text link at the bottom of the Browse table of contents
 
 ## Copyright and sources
 

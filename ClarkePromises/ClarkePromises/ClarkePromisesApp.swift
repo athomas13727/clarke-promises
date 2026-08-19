@@ -10,6 +10,7 @@ struct ClarkePromisesApp: App {
             RootTabView()
                 .environment(catalog)
                 .tint(AppAppearance.accent)
+                .background(AppAppearance.parchment.ignoresSafeArea())
         }
         .modelContainer(for: FavoriteVerse.self)
     }

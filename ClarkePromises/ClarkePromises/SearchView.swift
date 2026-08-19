@@ -21,15 +21,15 @@ struct SearchView: View {
                     NavigationLink(value: route(for: hit)) {
                         SearchHitRow(hit: hit)
                     }
+                    .listRowBackground(AppAppearance.parchment)
+                    .listRowSeparatorTint(AppAppearance.apparatus.opacity(0.35))
                 }
             }
         }
         .scrollContentBackground(.hidden)
-        .background(AppAppearance.parchment)
+        .readerChrome()
         .navigationTitle("Search")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(AppAppearance.parchment, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
         .searchable(text: $query, prompt: "Themes, references, KJV text")
         .navigationDestination(for: ThemeRoute.self) { route in
             ThemePageView(route: route)

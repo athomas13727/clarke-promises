@@ -30,20 +30,21 @@ struct FavoritesView: View {
                                 )
                             )
                         }
+                        .listRowBackground(AppAppearance.parchment)
+                        .listRowSeparatorTint(AppAppearance.apparatus.opacity(0.35))
                     } else {
                         Text(favorite.displayRef)
                             .font(AppAppearance.uiSans(13))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(AppAppearance.apparatus)
+                            .listRowBackground(AppAppearance.parchment)
                     }
                 }
             }
         }
         .scrollContentBackground(.hidden)
-        .background(AppAppearance.parchment)
+        .readerChrome()
         .navigationTitle("Favorites")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(AppAppearance.parchment, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
         .navigationDestination(for: ThemeRoute.self) { route in
             ThemePageView(route: route)
         }
