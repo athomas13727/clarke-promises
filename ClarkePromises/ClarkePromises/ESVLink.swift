@@ -43,12 +43,12 @@ enum ESVLink {
         }
     }
 
-    /// Clark's citation with spaces as `+`, same encoding for every publisher.
-    static func encodedRef(_ reference: String) -> String {
+    /// Clark's displayRef: keep the colon; map en/em dashes to hyphen; spaces as `space`.
+    static func encodedRef(_ reference: String, space: String) -> String {
         reference
             .replacingOccurrences(of: "–", with: "-")
             .replacingOccurrences(of: "—", with: "-")
-            .replacingOccurrences(of: " ", with: "+")
+            .replacingOccurrences(of: " ", with: space)
     }
 
     /// Outbound verse page. Never fetches or stores translation wording.
@@ -57,13 +57,15 @@ enum ESVLink {
     }
 
     static func bibleGatewayURL(reference: String, version: BibleGatewayVersion) -> URL {
-        let ref = encodedRef(reference)
         switch version {
         case .esv:
+            let ref = encodedRef(reference, space: "+")
             return URL(string: "https://www.esv.org/verses/\(ref)/")!
         case .niv:
+            let ref = encodedRef(reference, space: "%20")
             return URL(string: "https://www.biblica.com/bible/?osis=niv:\(ref)")!
         case .nasb:
+            let ref = encodedRef(reference, space: "+")
             return URL(string: "https://www.biblegateway.com/passage/?search=\(ref)&version=NASB")!
         }
     }

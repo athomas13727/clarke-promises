@@ -39,18 +39,20 @@ def bible_com_url(book: str, chapter: int, verse: int) -> str:
     return f"https://www.bible.com/bible/59/{code}.{chapter}.{verse}"
 
 
-def encoded_ref(reference: str) -> str:
-    return reference.replace("–", "-").replace("—", "-").replace(" ", "+")
+def encoded_ref(reference: str, space: str = "+") -> str:
+    return reference.replace("–", "-").replace("—", "-").replace(" ", space)
 
 
 def handoff_url(reference: str, version: str) -> str:
-    ref = encoded_ref(reference)
     if version == "ESV":
-        return f"https://www.esv.org/verses/{ref}/"
+        return f"https://www.esv.org/verses/{encoded_ref(reference, '+')}/"
     if version == "NIV":
-        return f"https://www.biblica.com/bible/?osis=niv:{ref}"
+        return f"https://www.biblica.com/bible/?osis=niv:{encoded_ref(reference, '%20')}"
     if version == "NASB":
-        return f"https://www.biblegateway.com/passage/?search={ref}&version=NASB"
+        return (
+            "https://www.biblegateway.com/passage/"
+            f"?search={encoded_ref(reference, '+')}&version=NASB"
+        )
     raise AssertionError(f"unexpected version {version!r}")
 
 
@@ -90,9 +92,18 @@ def main() -> int:
     assert bible_com_url("John", 3, 16) == "https://www.bible.com/bible/59/JHN.3.16"
     assert bible_com_url("Ephesians", 2, 18) == "https://www.bible.com/bible/59/EPH.2.18"
     assert encoded_ref("Psalm 37:3") == "Psalm+37:3"
+    assert encoded_ref("Psalm 37:3–4") == "Psalm+37:3-4"
     assert (
         handoff_url("Psalm 37:3", "ESV")
         == "https://www.esv.org/verses/Psalm+37:3/"
+    )
+    assert (
+        handoff_url("Psalm 37:3", "NIV")
+        == "https://www.biblica.com/bible/?osis=niv:Psalm%2037:3"
+    )
+    assert (
+        handoff_url("Psalm 37:3", "NASB")
+        == "https://www.biblegateway.com/passage/?search=Psalm+37:3&version=NASB"
     )
     assert (
         handoff_url("Psalm 23:1–6", "NASB")
@@ -100,7 +111,7 @@ def main() -> int:
     )
     assert (
         handoff_url("1 Peter 2:4-5", "NIV")
-        == "https://www.biblica.com/bible/?osis=niv:1+Peter+2:4-5"
+        == "https://www.biblica.com/bible/?osis=niv:1%20Peter%202:4-5"
     )
 
     titles = {}
