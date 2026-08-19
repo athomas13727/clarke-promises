@@ -190,7 +190,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nif [ ! -f \"$PLIST\" ]; then\n  echo \"error: built Info.plist not found at $PLIST\" >&2\n  exit 1\nfi\nFIGURE=$'\\u2007'\n/usr/libexec/PlistBuddy -c \"Set :CFBundleDisplayName Precious${FIGURE}Promises\" \"$PLIST\"\nmkdir -p \"${DERIVED_FILE_DIR}\"\ntouch \"${DERIVED_FILE_DIR}/PreciousPromisesName.stamp\"\necho \"Forced CFBundleDisplayName with U+2007 figure space; left CFBundleName unchanged\"\n";
+			shellScript = "PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nif [ ! -f \"$PLIST\" ]; then\n  echo \"error: built Info.plist not found at $PLIST\" >&2\n  exit 1\nfi\n/usr/libexec/PlistBuddy -c \"Set :CFBundleDisplayName 'The Promises'\" \"$PLIST\"\nmkdir -p \"${DERIVED_FILE_DIR}\"\ntouch \"${DERIVED_FILE_DIR}/PreciousPromisesName.stamp\"\necho \"Forced CFBundleDisplayName to The Promises (ASCII space); left CFBundleName unchanged\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -264,7 +264,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -292,7 +292,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
