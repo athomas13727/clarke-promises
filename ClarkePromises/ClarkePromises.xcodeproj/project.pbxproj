@@ -112,6 +112,7 @@
 				A40000000000000000000002 /* Sources */,
 				A40000000000000000000001 /* Frameworks */,
 				A40000000000000000000003 /* Resources */,
+				A40000000000000000000004 /* Force SpringBoard display name */,
 			);
 			buildRules = (
 			);
@@ -168,6 +169,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A40000000000000000000004 /* Force SpringBoard display name */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Force SpringBoard display name";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nif [ ! -f \"$PLIST\" ]; then\n  echo \"warning: built Info.plist not found at $PLIST\" >&2\n  exit 0\nfi\n/usr/libexec/PlistBuddy -c \"Set :CFBundleDisplayName 'Precious Promises'\" \"$PLIST\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleName 'Precious Promises'\" \"$PLIST\" || /usr/libexec/PlistBuddy -c \"Add :CFBundleName string 'Precious Promises'\" \"$PLIST\"\necho \"Forced CFBundleName and CFBundleDisplayName to Precious Promises in $PLIST\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A40000000000000000000002 /* Sources */ = {
@@ -239,7 +262,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -276,7 +299,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
