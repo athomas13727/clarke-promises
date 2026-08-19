@@ -38,6 +38,16 @@ website split:
 
 Printed page *N* in that edition corresponds to EPUB `page_{N+90}.html`.
 
+The bundled JSON keeps Clark's **nested heads**: each theme has a `number`
+(roman, or omitted for sub-heads), optional `verses`, and optional
+`children`. Food/Raiment, Long life/Health, the trouble triad, sickness
+and old age, war/enemies, slander/reproach, and the large trees under
+Justification, Converting grace, Knowledge, Interest in God, Interest in
+Christ, the Spirit, and Heaven are stored as children — not flattened
+into the parent title.
+
+`scripts/theme_tree.py` is the outline. Rebuild with `build_corpus.py`.
+
 ## How the extract was built
 
 ```bash
@@ -71,11 +81,17 @@ To finish it:
 3. Watch for OCR traps in this edition: long-s/`f` (`fob` = Job, `fohn` = John),
    roman `l` read as `1` (Ps. l. 15 = Psalm 50:15), and `cxiv`/`cxlv` swaps
    in the Psalms.
-4. Add or correct references in `scripts/build_corpus.py` (prefer the
-   `curated` list on a theme, or tighten the page range).
+4. Add or correct references in `scripts/theme_tree.py` (`curated`, page
+   range, or `start_marker` / `end_marker` for same-page siblings).
 5. Rebuild and run `python3 scripts/validate_corpus.py`.
 6. Do not paste ESV/NASB/NIV/NET wording into the JSON. Look the verse up
    in the KJV dataset only.
+
+Known OCR gaps: running headers sometimes leak a verse into the next head
+(e.g. Food); `Matt, vi, 25` style commas drop refs unless curated (Raiment);
+Preservation and Old Age needed a short curated list because those pages
+are badly broken; grandchildren on a shared page (Pardon’s “heinous / all
+/ backslidings”) still share most of the same refs.
 
 Watts's recommendation and Clark's introduction are intentionally omitted
 from the app so it remains a promise reader.

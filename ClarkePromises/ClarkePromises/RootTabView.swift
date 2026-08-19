@@ -4,7 +4,7 @@ struct RootTabView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                PartListView()
+                BrowseView()
             }
             .tabItem {
                 Label("Browse", systemImage: "book.closed")
@@ -22,13 +22,6 @@ struct RootTabView: View {
             }
             .tabItem {
                 Label("Favorites", systemImage: "star")
-            }
-
-            NavigationStack {
-                AboutView()
-            }
-            .tabItem {
-                Label("About", systemImage: "info.circle")
             }
         }
     }

@@ -39,13 +39,19 @@ def bible_com_url(book: str, chapter: int, verse: int) -> str:
     return f"https://www.bible.com/bible/59/{code}.{chapter}.{verse}"
 
 
+def walk(nodes):
+    for node in nodes:
+        yield node
+        yield from walk(node.get("children") or [])
+
+
 def search(file: dict, query: str) -> list[dict]:
     terms = query.lower().split()
     hits = []
     for part in file["parts"]:
         for chapter in part["chapters"]:
-            for theme in chapter["themes"]:
-                for verse in theme["verses"]:
+            for theme in walk(chapter["themes"]):
+                for verse in theme.get("verses") or []:
                     hay = " ".join(
                         [
                             theme["title"].lower(),
@@ -72,13 +78,19 @@ def main() -> int:
     access = search(data, "access")
     assert any(h["theme"]["id"] == "p1-c3-free-access" for h in access), access[:3]
 
+    food = search(data, "raiment")
+    assert any(h["theme"]["id"] in {"p1-c1-raiment", "p1-c1-food-raiment"} for h in food), food[:3]
+
     psalm = search(data, "Psalm 23")
     assert psalm, "expected Psalm 23 hits"
 
     kjv = search(data, "shepherd")
     assert kjv, "expected KJV text hit for shepherd"
 
-    print(f"OK: ESV links and search ({len(access)} access hits, {len(psalm)} Psalm 23, {len(kjv)} shepherd)")
+    print(
+        f"OK: ESV links and nested search "
+        f"({len(access)} access, {len(food)} raiment, {len(psalm)} Psalm 23, {len(kjv)} shepherd)"
+    )
     return 0
 
 

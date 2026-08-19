@@ -6,11 +6,12 @@ There are **no ads, no tracking, no analytics, and no accounts**. Favorites are 
 
 ## Features
 
-- **Browse** the original book tree: Parts → Chapters → Themes → verses
-- **Search** Clark's heads, verse references, and King James wording
-- **Star** favorites (SwiftData, on-device)
-- Each verse shows **public-domain KJV** text in-app
-- **Open in ESV** hands the reference to Safari or another app (`esv.org`, or bible.com translation id 59). ESV wording is never bundled, cached, or stored.
+- **Browse** one scrollable 1895 table of contents (parts, chapters, numbered heads, indented sub-heads). A tap opens that head as a page of the book — not another file-browser level
+- **Search** Clark's heads, verse references, and King James wording; results open the theme page at the hit
+- **Star** favorites (SwiftData, on-device); favorites return to the same theme page
+- Each verse shows **public-domain KJV** on the theme page (serif text, reference after the verse)
+- **Open in ESV** is a quiet per-verse control (`esv.org`, or bible.com translation id 59). ESV wording is never bundled, cached, or stored
+- Tabs: Browse, Search, Favorites. About is the trailing info button on Browse
 
 ## Copyright and sources
 
@@ -46,6 +47,7 @@ Deployment target: **iOS 17+**
 ```
 ClarkePromises/                 Xcode app (SwiftUI + SwiftData)
   ClarkePromises/Resources/clarke-promises.json
+scripts/theme_tree.py           Nested 1895 heads (number + children)
 scripts/build_corpus.py         Rebuild heads + KJV pairing from the 1895 EPUB
 scripts/validate_corpus.py
 scripts/test_logic.py

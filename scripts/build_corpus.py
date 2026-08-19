@@ -26,6 +26,9 @@ from collections import OrderedDict
 from html import unescape
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from theme_tree import CHAPTERS, PARTS, TREES, Node
+
 BOOK_FILES = {
     "Genesis": "Genesis.json",
     "Exodus": "Exodus.json",
@@ -342,193 +345,6 @@ BOOK_ABBREVS = [
     ("saiah", "Isaiah"),
 ]
 
-# 1895 printed-page ranges from the edition TOC (inclusive start, exclusive end).
-# Page mapping used by extract_epub_pages(): printed N => EPUB page N+90.
-THEMES = [
-    # Part I ch. 1
-    ("part-1", "p1-c1", "p1-c1-general", "General Promises to the Good", 1, 3, None),
-    ("part-1", "p1-c1", "p1-c1-temporal-general", "Temporal Blessings in General", 3, 4, None),
-    ("part-1", "p1-c1", "p1-c1-food-raiment", "Food and Raiment", 4, 5, None),
-    ("part-1", "p1-c1", "p1-c1-long-life-health", "Long Life and Health", 5, 7, None),
-    ("part-1", "p1-c1", "p1-c1-safety", "Safety under the Divine Protection", 7, 11, None),
-    ("part-1", "p1-c1", "p1-c1-peace", "Peace", 11, 12, None),
-    ("part-1", "p1-c1", "p1-c1-direction-honour", "Direction and Honour", 12, 14, None),
-    ("part-1", "p1-c1", "p1-c1-success", "Success and Prosperity", 14, 15, None),
-    ("part-1", "p1-c1", "p1-c1-plenty", "Plenty and Riches", 15, 17, None),
-    ("part-1", "p1-c1", "p1-c1-children", "Children, and a Blessing upon All He Has", 17, 19, None),
-    ("part-1", "p1-c1", "p1-c1-blessing-children", "A Blessing upon His Children", 19, 20, None),
-    ("part-1", "p1-c1", "p1-c1-family", "A Blessing upon His Family", 20, 21, None),
-    # Part I ch. 2
-    ("part-1", "p1-c2", "p1-c2-preservation", "Preservation from Trouble", 21, 22, None),
-    ("part-1", "p1-c2", "p1-c2-deliverance", "Deliverance out of Trouble", 22, 24, None),
-    ("part-1", "p1-c2", "p1-c2-support", "Support under Trouble", 24, 28, None),
-    ("part-1", "p1-c2", "p1-c2-sickness", "Sickness, Child-bearing, and Old Age", 28, 31, None),
-    ("part-1", "p1-c2", "p1-c2-famine", "Deliverance from Famine and Want", 31, 32, None),
-    ("part-1", "p1-c2", "p1-c2-war", "Deliverance from War and Enemies", 32, 36, None),
-    ("part-1", "p1-c2", "p1-c2-oppression", "Oppression and Injustice", 36, 38, None),
-    ("part-1", "p1-c2", "p1-c2-slander", "Slanders and Reproach", 38, 39, None),
-    ("part-1", "p1-c2", "p1-c2-stranger", "The Stranger, Exile, and Witchcraft", 39, 40, None),
-    ("part-1", "p1-c2", "p1-c2-poor", "The Poor and Helpless", 40, 41, None),
-    ("part-1", "p1-c2", "p1-c2-fatherless", "The Fatherless and Widow", 41, 43, None),
-    ("part-1", "p1-c2", "p1-c2-childless-captive", "The Childless, Prisoner, and Captive", 43, 44, None),
-    ("part-1", "p1-c2", "p1-c2-death", "Deliverance from Death", 44, 46, None),
-    # Part I ch. 3
-    ("part-1", "p1-c3", "p1-c3-spiritual-general", "Spiritual Blessings in General", 46, 47, None),
-    ("part-1", "p1-c3", "p1-c3-justification", "Justification", 47, 49, None),
-    ("part-1", "p1-c3", "p1-c3-pardon", "Pardon of Sin", 49, 52, None),
-    ("part-1", "p1-c3", "p1-c3-pardon-christ", "Pardon through Christ, and Reconciliation", 52, 55, None),
-    ("part-1", "p1-c3", "p1-c3-adoption", "Adoption", 55, 57, None),
-    ("part-1", "p1-c3", "p1-c3-union", "Union and Communion with the Church", 57, 59, None),
-    (
-        "part-1",
-        "p1-c3",
-        "p1-c3-free-access",
-        "Free Access to God, with Acceptance",
-        59,
-        60,
-        [
-            ("Ephesians", 2, 18),
-            ("Ephesians", 3, 12),
-            ("1 Peter", 2, 4),
-            ("1 Peter", 2, 5),
-            ("Hebrews", 10, 19),
-            ("Hebrews", 10, 20),
-            ("Ephesians", 1, 6),
-            ("Ezekiel", 20, 40),
-            ("Ezekiel", 20, 41),
-        ],
-    ),
-    ("part-1", "p1-c3", "p1-c3-hearing-prayer", "Hearing Prayer", 60, 63, None),
-    ("part-1", "p1-c3", "p1-c3-sanctifying", "Sanctifying Grace", 63, 65, None),
-    ("part-1", "p1-c3", "p1-c3-converting", "Converting Grace, Repentance, and Faith", 65, 69, None),
-    ("part-1", "p1-c3", "p1-c3-knowledge", "Knowledge, Wisdom, and Divine Guidance", 69, 73, None),
-    ("part-1", "p1-c3", "p1-c3-means", "The Means of Grace", 73, 77, None),
-    ("part-1", "p1-c3", "p1-c3-against-sin", "Grace against Sin and Temptation", 77, 81, None),
-    ("part-1", "p1-c3", "p1-c3-strength", "Strength, Courage, and Resolution", 81, 83, None),
-    ("part-1", "p1-c3", "p1-c3-fruitfulness", "Fruitfulness and Increase of Grace", 83, 85, None),
-    ("part-1", "p1-c3", "p1-c3-persevere", "Grace to Persevere", 85, 87, None),
-    ("part-1", "p1-c3", "p1-c3-afflictions", "Sanctified Afflictions", 87, 91, None),
-    ("part-1", "p1-c3", "p1-c3-believers-children", "Grace to the Children of Believers", 91, 92, None),
-    ("part-1", "p1-c3", "p1-c3-interest-god", "An Interest in God", 92, 102, None),
-    ("part-1", "p1-c3", "p1-c3-interest-christ", "An Interest in Christ", 102, 109, None),
-    ("part-1", "p1-c3", "p1-c3-spirit", "Promises of the Spirit", 109, 114, None),
-    ("part-1", "p1-c3", "p1-c3-angels-priests", "Ministry of Angels; Kings and Priests", 114, 115, None),
-    ("part-1", "p1-c3", "p1-c3-conscience", "Peace of Conscience, Comfort, and Hope", 115, 118, None),
-    ("part-1", "p1-c3", "p1-c3-joy", "Delight and Joy in God", 118, 121, None),
-    ("part-1", "p1-c3", "p1-c3-death", "Support in Death", 121, 123, None),
-    # Part I ch. 4 — 1895 djvu.txt truncates here; EPUB continues
-    ("part-1", "p1-c4", "p1-c4-hell", "Deliverance from Hell", 123, 124, None),
-    ("part-1", "p1-c4", "p1-c4-after-death", "Happiness immediately after Death", 124, 125, None),
-    ("part-1", "p1-c4", "p1-c4-resurrection", "A Glorious Resurrection", 125, 130, None),
-    ("part-1", "p1-c4", "p1-c4-heaven", "Everlasting Happiness in Heaven", 130, 138, None),
-    # Part II ch. 1
-    (
-        "part-2",
-        "p2-c1",
-        "p2-c1-faith",
-        "Faith, particularly in Christ",
-        138,
-        141,
-        [
-            ("Isaiah", 28, 16),
-            ("1 Peter", 2, 6),
-            ("Isaiah", 45, 22),
-            ("Mark", 9, 23),
-            ("John", 1, 12),
-            ("John", 3, 16),
-            ("John", 3, 36),
-            ("Romans", 4, 5),
-            ("Romans", 10, 9),
-            ("Romans", 10, 11),
-            ("Ephesians", 2, 8),
-        ],
-    ),
-    ("part-2", "p2-c1", "p2-c1-confessing", "Confessing Christ", 141, 142, None),
-    ("part-2", "p2-c1", "p2-c1-repentance", "Repentance", 142, 147, None),
-    ("part-2", "p2-c1", "p2-c1-obedience", "Obedience and Obeying Christ", 148, 155, None),
-    ("part-2", "p2-c1", "p2-c1-sincerity", "Sincerity and Uprightness", 155, 157, None),
-    ("part-2", "p2-c1", "p2-c1-love-god", "Love to God and to Christ", 157, 159, None),
-    ("part-2", "p2-c1", "p2-c1-trust", "Trusting and Patiently Waiting on God", 159, 162, None),
-    ("part-2", "p2-c1", "p2-c1-fear", "The Fear of God, and Honouring God", 162, 164, None),
-    ("part-2", "p2-c1", "p2-c1-prayer", "Prayer, Seeking God, and Praise", 164, 169, None),
-    ("part-2", "p2-c1", "p2-c1-wisdom", "Wisdom and Knowledge", 169, 174, None),
-    ("part-2", "p2-c1", "p2-c1-word", "Hearing, Reading, and Loving the Word", 174, 177, None),
-    ("part-2", "p2-c1", "p2-c1-meditation", "Meditation", 177, 179, None),
-    ("part-2", "p2-c1", "p2-c1-fasting", "Fasting", 179, 180, None),
-    ("part-2", "p2-c1", "p2-c1-baptism", "Baptism", 180, 181, None),
-    ("part-2", "p2-c1", "p2-c1-supper", "The Lord's Supper", 181, 182, None),
-    ("part-2", "p2-c1", "p2-c1-discourse", "Good Discourse and Government of the Tongue", 182, 184, None),
-    ("part-2", "p2-c1", "p2-c1-watch", "Watchfulness", 184, 185, None),
-    ("part-2", "p2-c1", "p2-c1-company", "Keeping Good Company", 185, 186, None),
-    ("part-2", "p2-c1", "p2-c1-sabbath", "Performing Oaths and Keeping the Sabbath", 185, 187, None),
-    # Part II ch. 2
-    ("part-2", "p2-c2", "p2-c2-parents", "Obedience to Parents", 187, 189, None),
-    ("part-2", "p2-c2", "p2-c2-education", "Good Education and Correcting Children", 189, 190, None),
-    ("part-2", "p2-c2", "p2-c2-wife", "A Good Wife", 190, 191, None),
-    ("part-2", "p2-c2", "p2-c2-servants", "Faithful Servants", 191, 192, None),
-    ("part-2", "p2-c2", "p2-c2-kings", "Good Kings, Magistrates, and Subjects", 192, 193, None),
-    ("part-2", "p2-c2", "p2-c2-ministers", "Faithful Ministers", 193, 197, None),
-    ("part-2", "p2-c2", "p2-c2-hear-ministers", "Receiving and Hearkening to Ministers", 197, 198, None),
-    ("part-2", "p2-c2", "p2-c2-love", "Love, Unity, and the Peace-makers", 198, 200, None),
-    ("part-2", "p2-c2", "p2-c2-charitable", "The Charitable, Merciful, and Liberal", 200, 207, None),
-    ("part-2", "p2-c2", "p2-c2-reproof", "Giving and Receiving Reproof", 207, 208, None),
-    ("part-2", "p2-c2", "p2-c2-forgive", "Forgiving Injuries", 208, 209, None),
-    ("part-2", "p2-c2", "p2-c2-chastity", "Chastity and Purity", 209, 210, None),
-    ("part-2", "p2-c2", "p2-c2-diligence", "Diligence and Improving Talents", 210, 212, None),
-    ("part-2", "p2-c2", "p2-c2-just", "The Just and Honest", 212, 214, None),
-    ("part-2", "p2-c2", "p2-c2-truth-candour", "Truth and Candour", 214, 215, None),
-    ("part-2", "p2-c2", "p2-c2-contentment", "Contentment and Mortification", 215, 217, None),
-    # Part II ch. 3
-    ("part-2", "p2-c3", "p2-c3-meek", "The Meek, Humble, and Contrite", 217, 221, None),
-    ("part-2", "p2-c3", "p2-c3-suffer", "Them that Suffer for Righteousness' Sake", 221, 223, None),
-    ("part-2", "p2-c3", "p2-c3-patience", "Patience and Submission", 223, 225, None),
-    ("part-2", "p2-c3", "p2-c3-perseverance", "Perseverance, and Him that Overcometh", 225, 229, None),
-    # Appendix
-    ("appendix", "apx-c1", "apx-enlargement", "Enlargement of the Church and Spread of the Gospel", 229, 240, None),
-    ("appendix", "apx-c1", "apx-glory", "The Glory of the Church", 240, 243, None),
-    ("appendix", "apx-c1", "apx-light", "Increase of Light and Means of Grace", 243, 244, None),
-    ("appendix", "apx-c1", "apx-purity", "Increase of Purity, Holiness, and Righteousness", 244, 247, None),
-    ("appendix", "apx-c1", "apx-peace", "Peace, Love, and Unity in the Church", 247, 249, None),
-    ("appendix", "apx-c1", "apx-enemies", "Enemies of the Church, and Destruction of Babylon", 249, 252, None),
-    ("appendix", "apx-c1", "apx-kings", "Kings Submit to the Kingdom of Christ", 252, 254, None),
-    ("appendix", "apx-c1", "apx-security", "Security, Tranquillity, and Prosperity of the Church", 254, 257, None),
-    ("appendix", "apx-c1", "apx-perpetual", "Perpetual Continuance of the Church", 257, 258, None),
-    ("appendix", "apx-c1", "apx-jews", "Conversion and Restoration of the Jews", 258, 270, None),
-    ("appendix", "apx-c1", "apx-conclusion", "That God Will Perform All His Promises", 270, 273, None),
-]
-
-CHAPTERS = {
-    "p1-c1": (1, "Promises of Temporal Blessings"),
-    "p1-c2": (2, "Promises relating to the Troubles of Life"),
-    "p1-c3": (3, "Promises of Spiritual Blessings in this Life"),
-    "p1-c4": (4, "Promises of Blessings in the Other World"),
-    "p2-c1": (1, "Promises to Duties of the First Table"),
-    "p2-c2": (2, "Promises to Duties of the Second Table"),
-    "p2-c3": (3, "Promises to Duties belonging to Both Tables"),
-    "apx-c1": (1, "Promises relating to the State of the Church"),
-}
-
-PARTS = [
-    (
-        "part-1",
-        "The Blessings Promised",
-        "Part I. The blessings promised to the good.",
-        ["p1-c1", "p1-c2", "p1-c3", "p1-c4"],
-    ),
-    (
-        "part-2",
-        "Duties to which Promises Are Made",
-        "Part II. Promises to several graces and duties.",
-        ["p2-c1", "p2-c2", "p2-c3"],
-    ),
-    (
-        "appendix",
-        "Appendix: The Future State of the Church",
-        "An appendix of promises relating to the state of the Church, with the conclusion.",
-        ["apx-c1"],
-    ),
-]
-
 
 def roman_to_int(token: str) -> int | None:
     token = token.lower().replace(" ", "")
@@ -631,11 +447,23 @@ def printed_to_epub(printed: int) -> int:
 
 def pages_text(pages: dict[int, str], start: int, end: int) -> str:
     chunks = []
-    for printed in range(start, end):
+    for printed in range(start, max(start, end)):
         epub = printed_to_epub(printed)
         if epub in pages:
             chunks.append(pages[epub])
     return "\n".join(chunks)
+
+
+def slice_text(text: str, start_marker: str | None, end_marker: str | None) -> str:
+    if start_marker:
+        idx = text.lower().find(start_marker.lower())
+        if idx >= 0:
+            text = text[idx:]
+    if end_marker:
+        idx = text.lower().find(end_marker.lower())
+        if idx > 20:
+            text = text[:idx]
+    return text
 
 
 def normalize_for_refs(text: str) -> str:
@@ -825,6 +653,97 @@ def build_verse(
     }
 
 
+def collect_ref_keys(theme: dict) -> set[tuple[str, int, int]]:
+    keys: set[tuple[str, int, int]] = set()
+    for verse in theme.get("verses") or []:
+        book = verse["book"]
+        chapter = verse["chapter"]
+        start = verse["verse"]
+        end = verse.get("endVerse") or start
+        for n in range(start, end + 1):
+            keys.add((book, chapter, n))
+    for child in theme.get("children") or []:
+        keys |= collect_ref_keys(child)
+    return keys
+
+
+def count_nodes(theme: dict) -> int:
+    return 1 + sum(count_nodes(child) for child in theme.get("children") or [])
+
+
+def count_verses(theme: dict) -> int:
+    total = len(theme.get("verses") or [])
+    for child in theme.get("children") or []:
+        total += count_verses(child)
+    return total
+
+
+def node_has_content(theme: dict) -> bool:
+    if theme.get("verses"):
+        return True
+    return any(node_has_content(child) for child in theme.get("children") or [])
+
+
+def prune_empty(theme: dict) -> dict | None:
+    children = [c for child in theme.get("children") or [] if (c := prune_empty(child))]
+    verses = theme.get("verses") or []
+    if not verses and not children:
+        return None
+    out = dict(theme)
+    if verses:
+        out["verses"] = verses
+    else:
+        out.pop("verses", None)
+    if children:
+        out["children"] = children
+    else:
+        out.pop("children", None)
+    return out
+
+
+def build_node(node: Node, pages: dict[int, str], kjv: dict, report_lines: list[str]) -> dict:
+    text = slice_text(pages_text(pages, node.start, node.end), node.start_marker, node.end_marker)
+    refs = parse_refs(text, kjv)
+    if node.curated:
+        for item in node.curated:
+            if item not in refs:
+                refs.append(item)
+    children = [build_node(child, pages, kjv, report_lines) for child in node.children]
+    claimed: set[tuple[str, int, int]] = set()
+    for child in children:
+        claimed |= collect_ref_keys(child)
+    if children:
+        refs = [ref for ref in refs if ref not in claimed]
+    uniq = list(OrderedDict.fromkeys(refs))
+    grouped = group_consecutive(uniq)
+    verses = [build_verse(node.id, b, c, s, e, kjv) for b, c, s, e in grouped]
+    record: dict = {
+        "id": node.id,
+        "number": node.number,
+        "title": node.title,
+        "sourcePage": node.start,
+    }
+    if verses:
+        record["verses"] = verses
+    if children:
+        record["children"] = children
+    report_lines.append(
+        f"{node.id:32} p.{node.start:3d}-{node.end-1:<3d}  "
+        f"{len(verses):3d} entries  {node.number or '·':>5}  {node.title}"
+    )
+    return record
+
+
+def walk_find(themes: list[dict], theme_id: str) -> dict | None:
+    for theme in themes:
+        if theme["id"] == theme_id:
+            return theme
+        found = walk_find(theme.get("children") or [], theme_id)
+        if found:
+            return found
+    return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--epub", required=True, type=Path)
@@ -836,44 +755,22 @@ def main() -> int:
     kjv = load_kjv(args.kjv_dir)
     pages = extract_epub_pages(args.epub)
 
-    theme_records = []
-    report_lines = []
-    total_verses = 0
-    empty = []
-
-    for part_id, chapter_id, theme_id, title, start, end, curated in THEMES:
-        text = pages_text(pages, start, end)
-        refs = parse_refs(text, kjv)
-        if curated:
-            for item in curated:
-                if item not in refs:
-                    refs.append(item)
-        # stable unique
-        uniq = list(OrderedDict.fromkeys(refs))
-        grouped = group_consecutive(uniq)
-        verses = [build_verse(theme_id, b, c, s, e, kjv) for b, c, s, e in grouped]
-        theme_records.append(
-            {
-                "partId": part_id,
-                "chapterId": chapter_id,
-                "id": theme_id,
-                "title": title,
-                "sourcePage": start,
-                "verses": verses,
-            }
-        )
-        total_verses += len(verses)
-        status = f"{len(verses):3d} entries / {len(uniq):3d} verses"
-        report_lines.append(f"{theme_id:28} p.{start:3d}-{end-1:<3d}  {status}  {title}")
-        if not verses:
-            empty.append(theme_id)
+    report_lines: list[str] = []
+    empty: list[str] = []
 
     parts_out = []
     for part_id, part_title, summary, chapter_ids in PARTS:
         chapters_out = []
         for chapter_id in chapter_ids:
             number, chapter_title = CHAPTERS[chapter_id]
-            themes = [t for t in theme_records if t["chapterId"] == chapter_id and t["verses"]]
+            built = [build_node(node, pages, kjv, report_lines) for node in TREES[chapter_id]]
+            themes = []
+            for theme in built:
+                kept = prune_empty(theme)
+                if kept:
+                    themes.append(kept)
+                else:
+                    empty.append(theme["id"])
             if not themes:
                 continue
             chapters_out.append(
@@ -881,15 +778,7 @@ def main() -> int:
                     "id": chapter_id,
                     "number": number,
                     "title": chapter_title,
-                    "themes": [
-                        {
-                            "id": t["id"],
-                            "title": t["title"],
-                            "sourcePage": t["sourcePage"],
-                            "verses": t["verses"],
-                        }
-                        for t in themes
-                    ],
+                    "themes": themes,
                 }
             )
         if chapters_out:
@@ -902,10 +791,9 @@ def main() -> int:
                 }
             )
 
-    theme_count = sum(len(ch["themes"]) for p in parts_out for ch in p["chapters"])
-    verse_count = sum(
-        len(th["verses"]) for p in parts_out for ch in p["chapters"] for th in ch["themes"]
-    )
+    top_themes = [th for p in parts_out for ch in p["chapters"] for th in ch["themes"]]
+    theme_count = sum(count_nodes(th) for th in top_themes)
+    verse_count = sum(count_verses(th) for th in top_themes)
 
     catalog = {
         "meta": {
@@ -931,6 +819,7 @@ def main() -> int:
             "themeCount": theme_count,
             "verseEntryCount": verse_count,
             "emptyThemesOmitted": empty,
+            "nestedHeads": True,
         },
         "parts": parts_out,
     }
@@ -949,13 +838,10 @@ def main() -> int:
     print(f"Wrote {args.out}")
 
     # Hard requirements
-    free = next(
-        th
-        for p in parts_out
-        for ch in p["chapters"]
-        for th in ch["themes"]
-        if th["id"] == "p1-c3-free-access"
-    )
+    free = walk_find(top_themes, "p1-c3-free-access")
+    if free is None:
+        print("ERROR: Free Access theme missing", file=sys.stderr)
+        return 1
     if len(free["verses"]) < 6:
         print("ERROR: Free Access theme is too thin", file=sys.stderr)
         return 1

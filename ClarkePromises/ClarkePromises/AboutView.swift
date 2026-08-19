@@ -8,7 +8,7 @@ struct AboutView: View {
             Section("The compiler") {
                 Text("Samuel Clark (also Clarke), 1684–1750, of St Albans, collected the promises of Scripture under their proper heads. The book is often called Precious Bible Promises or Clarke's Scripture Promises.")
                 Text(catalog.meta.title)
-                    .font(.headline)
+                    .font(AppAppearance.displaySerif(18))
                 Text(catalog.meta.edition)
             }
 
@@ -34,24 +34,19 @@ struct AboutView: View {
                 ForEach(catalog.meta.excluded, id: \.self) { line in
                     Text(line)
                 }
-                Text("Isaac Watts's recommendation and Clark's introduction are omitted here so the app stays a promise reader, not a reprint of the whole front matter.")
             }
 
             Section("Corpus") {
                 Text(catalog.meta.structure)
-                LabeledContent("Themes") { Text("\(catalog.meta.themeCount)") }
+                LabeledContent("Heads") { Text("\(catalog.meta.themeCount)") }
                 LabeledContent("Promise entries") { Text("\(catalog.meta.verseEntryCount)") }
-                Text("Heads follow the original two parts plus appendix. The modern four-part rearrangement used on some websites is not used.")
-                Text("References were recovered from the 1895 scan (EPUB/OCR) and then looked up in a public-domain KJV. A few OCR readings may still need proofing against the page images; see docs/CORPUS.md in the source repository.")
+                Text("Heads follow the original two parts plus appendix, including Clark's nested sub-heads. The modern four-part website split is not used.")
+                Text("References were recovered from the 1895 scan (EPUB/OCR) and looked up in a public-domain KJV. A few OCR readings may still need proofing; see docs/CORPUS.md.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
-
-            Section("Product") {
-                Text("Prepared for Aaron Thomas.")
-                Text("No analytics SDKs are linked. The app makes no API calls of its own.")
-            }
         }
         .navigationTitle("About")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

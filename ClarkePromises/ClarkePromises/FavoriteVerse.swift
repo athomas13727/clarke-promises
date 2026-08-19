@@ -5,11 +5,13 @@ import SwiftData
 final class FavoriteVerse {
     @Attribute(.unique) var osis: String
     var displayRef: String
+    var themeID: String = ""
     var createdAt: Date
 
-    init(osis: String, displayRef: String, createdAt: Date = .now) {
+    init(osis: String, displayRef: String, themeID: String = "", createdAt: Date = .now) {
         self.osis = osis
         self.displayRef = displayRef
+        self.themeID = themeID
         self.createdAt = createdAt
     }
 }
@@ -20,11 +22,22 @@ enum FavoritesStore {
     }
 
     @MainActor
-    static func toggle(verse: CatalogVerse, favorites: [FavoriteVerse], context: ModelContext) {
+    static func toggle(
+        verse: CatalogVerse,
+        themeID: String? = nil,
+        favorites: [FavoriteVerse],
+        context: ModelContext
+    ) {
         if let existing = favorites.first(where: { $0.osis == verse.osis }) {
             context.delete(existing)
         } else {
-            context.insert(FavoriteVerse(osis: verse.osis, displayRef: verse.displayRef))
+            context.insert(
+                FavoriteVerse(
+                    osis: verse.osis,
+                    displayRef: verse.displayRef,
+                    themeID: themeID ?? ""
+                )
+            )
         }
     }
 }

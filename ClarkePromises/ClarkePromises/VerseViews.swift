@@ -1,112 +1,91 @@
 import SwiftData
 import SwiftUI
 
-struct VerseRow: View {
+struct ReaderVerseBlock: View {
     let verse: CatalogVerse
-    var showsTheme: Bool = false
-    var themeTitle: String? = nil
+    var emphasized: Bool = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
+        VStack(alignment: .leading, spacing: 6) {
+            (Text(verseNumber).font(AppAppearance.uiSans(10, weight: .medium))
+                .baselineOffset(6)
+                .foregroundColor(AppAppearance.apparatus)
+            + Text("  " + verse.kjv)
+                .font(AppAppearance.readerSerif(17.5))
+                .foregroundColor(AppAppearance.ink))
+                .lineSpacing(5)
+                .fixedSize(horizontal: false, vertical: true)
+
+            HStack(alignment: .firstTextBaseline, spacing: 10) {
                 Text(verse.displayRef)
-                    .font(AppAppearance.referenceFont)
-                Spacer()
+                    .font(AppAppearance.uiSans(11))
+                    .foregroundStyle(AppAppearance.apparatus)
+                Spacer(minLength: 8)
                 FavoriteStarButton(verse: verse)
-                    .buttonStyle(.plain)
+                Link("Open in ESV", destination: ESVLink.esvOrgURL(for: verse))
+                    .font(AppAppearance.uiSans(11, weight: .medium))
+                    .foregroundStyle(AppAppearance.accent)
             }
-            Text(verse.kjv)
-                .font(AppAppearance.verseFont)
+        }
+        .padding(.vertical, 2)
+        .padding(.horizontal, emphasized ? 8 : 0)
+        .background {
+            if emphasized {
+                AppAppearance.accent.opacity(0.07)
+                    .padding(.horizontal, -8)
+            }
+        }
+    }
+
+    private var verseNumber: String {
+        if let end = verse.endVerse, end != verse.verse {
+            return "\(verse.verse)–\(end)"
+        }
+        return "\(verse.verse)"
+    }
+}
+
+struct SearchHitRow: View {
+    let hit: SearchHit
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(hit.theme.title)
+                .font(AppAppearance.uiSans(12, weight: .medium))
+                .foregroundStyle(AppAppearance.sectionLabel)
+            Text(hit.verse.kjv)
+                .font(AppAppearance.readerSerif(16))
                 .foregroundStyle(AppAppearance.ink)
-                .lineLimit(4)
-            if showsTheme, let themeTitle {
-                Text(themeTitle)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+                .lineLimit(3)
+            Text(hit.verse.displayRef)
+                .font(AppAppearance.uiSans(11))
+                .foregroundStyle(AppAppearance.apparatus)
         }
         .padding(.vertical, 4)
     }
 }
 
-struct VerseDetailView: View {
-    let verse: CatalogVerse
-    @Environment(CatalogStore.self) private var catalog
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text(verse.displayRef)
-                    .font(.system(.title2, design: .serif).weight(.semibold))
-
-                Text("King James Version")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-
-                Text(verse.kjv)
-                    .font(.system(.title3, design: .serif))
-                    .foregroundStyle(AppAppearance.ink)
-                    .lineSpacing(6)
-
-                if let theme = catalog.theme(containing: verse.id) {
-                    LabeledContent("Clark's head") {
-                        Text(theme.title)
-                            .multilineTextAlignment(.trailing)
-                    }
-                    if let part = catalog.part(containing: theme),
-                       let chapter = catalog.chapter(containing: theme) {
-                        LabeledContent("Place in the book") {
-                            Text("\(part.title), ch. \(chapter.number)")
-                                .multilineTextAlignment(.trailing)
-                        }
-                    }
-                }
-
-                VStack(alignment: .leading, spacing: 10) {
-                    Link(destination: ESVLink.esvOrgURL(for: verse)) {
-                        Label("Open in ESV", systemImage: "arrow.up.right.square")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-
-                    Link(destination: ESVLink.bibleDotComURL(for: verse)) {
-                        Label("Open ESV on bible.com", systemImage: "safari")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
-
-                    Text("ESV text is © Crossway. This app does not bundle, cache, or store it. The link opens another app or Safari.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-                .padding(.top, 8)
-            }
-            .padding()
-        }
-        .background(AppAppearance.parchment)
-        .navigationTitle(verse.displayRef)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                FavoriteStarButton(verse: verse)
-            }
-        }
-    }
-}
-
 struct FavoriteStarButton: View {
     let verse: CatalogVerse
+    var themeID: String? = nil
     @Environment(\.modelContext) private var modelContext
     @Query private var favorites: [FavoriteVerse]
 
     var body: some View {
         Button {
-            FavoritesStore.toggle(verse: verse, favorites: favorites, context: modelContext)
+            FavoritesStore.toggle(
+                verse: verse,
+                themeID: themeID,
+                favorites: favorites,
+                context: modelContext
+            )
         } label: {
             Image(systemName: isFavorite ? "star.fill" : "star")
-                .foregroundStyle(isFavorite ? Color.yellow : AppAppearance.accent)
+                .font(AppAppearance.uiSans(12))
+                .foregroundStyle(isFavorite ? AppAppearance.accent : AppAppearance.apparatus)
                 .accessibilityLabel(isFavorite ? "Remove favorite" : "Add favorite")
         }
+        .buttonStyle(.plain)
     }
 
     private var isFavorite: Bool {

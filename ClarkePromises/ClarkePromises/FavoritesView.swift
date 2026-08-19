@@ -11,17 +11,28 @@ struct FavoritesView: View {
                 ContentUnavailableView(
                     "No favorites yet",
                     systemImage: "star",
-                    description: Text("Tap the star on any promise to save it on this device. Nothing is synced or sent anywhere.")
+                    description: Text("Tap the star beside any promise. It stays on this device.")
                 )
                 .listRowBackground(Color.clear)
             } else {
                 ForEach(favorites, id: \.osis) { favorite in
-                    if let verse = catalog.verse(osis: favorite.osis) {
-                        NavigationLink(value: verse) {
-                            VerseRow(verse: verse)
+                    if let route = catalog.route(forOsis: favorite.osis),
+                       let verse = catalog.verse(osis: favorite.osis),
+                       let theme = catalog.theme(containingOsis: favorite.osis) {
+                        NavigationLink(value: route) {
+                            SearchHitRow(
+                                hit: SearchHit(
+                                    verse: verse,
+                                    theme: theme,
+                                    pageTheme: catalog.pageTheme(for: theme),
+                                    chapterTitle: "",
+                                    partTitle: ""
+                                )
+                            )
                         }
                     } else {
                         Text(favorite.displayRef)
+                            .font(AppAppearance.uiSans(13))
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -30,8 +41,9 @@ struct FavoritesView: View {
         .scrollContentBackground(.hidden)
         .background(AppAppearance.parchment)
         .navigationTitle("Favorites")
-        .navigationDestination(for: CatalogVerse.self) { verse in
-            VerseDetailView(verse: verse)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: ThemeRoute.self) { route in
+            ThemePageView(route: route)
         }
     }
 }

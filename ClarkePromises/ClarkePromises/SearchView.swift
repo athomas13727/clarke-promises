@@ -10,18 +10,16 @@ struct SearchView: View {
                 ContentUnavailableView(
                     "Search the promises",
                     systemImage: "magnifyingglass",
-                    description: Text("Find Clark's heads, verse references, or King James wording. Try “access”, “Psalm 23”, or “shepherd”.")
+                    description: Text("Find Clark's heads, references, or King James wording.")
                 )
                 .listRowBackground(Color.clear)
             } else if hits.isEmpty {
                 ContentUnavailableView.search(text: query)
                     .listRowBackground(Color.clear)
             } else {
-                Section("\(hits.count) matches") {
-                    ForEach(hits) { hit in
-                        NavigationLink(value: hit.verse) {
-                            VerseRow(verse: hit.verse, showsTheme: true, themeTitle: hit.theme.title)
-                        }
+                ForEach(hits) { hit in
+                    NavigationLink(value: route(for: hit)) {
+                        SearchHitRow(hit: hit)
                     }
                 }
             }
@@ -29,13 +27,22 @@ struct SearchView: View {
         .scrollContentBackground(.hidden)
         .background(AppAppearance.parchment)
         .navigationTitle("Search")
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $query, prompt: "Themes, references, KJV text")
-        .navigationDestination(for: CatalogVerse.self) { verse in
-            VerseDetailView(verse: verse)
+        .navigationDestination(for: ThemeRoute.self) { route in
+            ThemePageView(route: route)
         }
     }
 
     private var hits: [SearchHit] {
         catalog.search(query: query)
+    }
+
+    private func route(for hit: SearchHit) -> ThemeRoute {
+        ThemeRoute(
+            themeID: hit.pageTheme.id,
+            highlightChildID: hit.pageTheme.id == hit.theme.id ? nil : hit.theme.id,
+            highlightVerseID: hit.verse.id
+        )
     }
 }
