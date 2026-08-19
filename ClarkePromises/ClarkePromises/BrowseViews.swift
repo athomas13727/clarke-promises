@@ -115,7 +115,7 @@ private struct TOCChapterSection: View {
             }
 
             if expanded {
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 0) {
                     ForEach(chapter.themes) { theme in
                         TOCThemeNode(theme: theme, indent: 0)
                     }
@@ -138,7 +138,7 @@ private struct TOCThemeNode: View {
     private var isSubtheme: Bool { indent > 0 }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 0) {
             NavigationLink(value: catalog.route(for: theme)) {
                 HStack(alignment: .firstTextBaseline, spacing: titleGutter) {
                     if let number = theme.number {
@@ -154,17 +154,18 @@ private struct TOCThemeNode: View {
                     } else {
                         Text(theme.title)
                             .font(AppAppearance.displaySerif(isSubtheme ? 16 : 19))
-                            .foregroundStyle(isSubtheme ? AppAppearance.inkSecondary : AppAppearance.ink)
+                            .foregroundStyle(AppAppearance.ink)
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, numberColumn + titleGutter + CGFloat(indent) * childIndent)
                     }
                 }
-                .padding(.vertical, 3)
+                .padding(.vertical, 8)
+                .frame(minHeight: 44, alignment: .center)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
+            .buttonStyle(TOCPressStyle())
 
             ForEach(theme.children) { child in
                 // AnyView breaks the `some View` cycle at the only recursive TOC edge.
@@ -172,6 +173,18 @@ private struct TOCThemeNode: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+/// Finger-down wash only. Outer TOC is 36pt; wash sits at 22pt from the screen edge.
+private struct TOCPressStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background {
+                AppAppearance.highlight
+                    .padding(.horizontal, -14)
+                    .opacity(configuration.isPressed ? 1 : 0)
+            }
     }
 }
 
