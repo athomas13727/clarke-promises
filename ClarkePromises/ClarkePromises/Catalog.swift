@@ -208,7 +208,7 @@ final class CatalogStore {
         case "part-2": partMark = "II"
         default: partMark = "APP."
         }
-        return "\(partMark)  ·  Ch. \(chapter.number)  ·  \(page.title)"
+        return "\(partMark) · Ch \(chapter.number) · \(page.title)"
     }
 
     func route(for theme: CatalogTheme) -> ThemeRoute {

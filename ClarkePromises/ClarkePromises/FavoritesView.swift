@@ -42,6 +42,8 @@ struct FavoritesView: View {
         .background(AppAppearance.parchment)
         .navigationTitle("Favorites")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(AppAppearance.parchment, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .navigationDestination(for: ThemeRoute.self) { route in
             ThemePageView(route: route)
         }

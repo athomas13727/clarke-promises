@@ -7,18 +7,19 @@ struct ReaderVerseBlock: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            (Text(verseNumber).font(AppAppearance.uiSans(10, weight: .medium))
-                .baselineOffset(6)
+            (Text(verseNumber)
+                .font(AppAppearance.uiSans(9))
+                .baselineOffset(7)
                 .foregroundColor(AppAppearance.apparatus)
-            + Text("  " + verse.kjv)
-                .font(AppAppearance.readerSerif(17.5))
+            + Text("\u{00A0}" + verse.kjv)
+                .font(AppAppearance.readerSerif(17))
                 .foregroundColor(AppAppearance.ink))
-                .lineSpacing(5)
+                .lineSpacing(3)
                 .fixedSize(horizontal: false, vertical: true)
 
-            HStack(alignment: .firstTextBaseline, spacing: 10) {
+            HStack(alignment: .firstTextBaseline, spacing: 12) {
                 Text(verse.displayRef)
-                    .font(AppAppearance.uiSans(11))
+                    .font(AppAppearance.uiSans(10))
                     .foregroundStyle(AppAppearance.apparatus)
                 Spacer(minLength: 8)
                 FavoriteStarButton(verse: verse)

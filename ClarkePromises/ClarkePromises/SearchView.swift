@@ -28,6 +28,8 @@ struct SearchView: View {
         .background(AppAppearance.parchment)
         .navigationTitle("Search")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(AppAppearance.parchment, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .searchable(text: $query, prompt: "Themes, references, KJV text")
         .navigationDestination(for: ThemeRoute.self) { route in
             ThemePageView(route: route)

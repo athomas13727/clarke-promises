@@ -7,18 +7,20 @@ struct BrowseView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 36) {
+            VStack(alignment: .leading, spacing: 48) {
                 ForEach(catalog.parts) { part in
-                    partBlock(part)
+                    TOCPartSection(part: part, collapsedChapters: $collapsedChapters)
                 }
             }
-            .padding(.horizontal, 28)
-            .padding(.top, 12)
-            .padding(.bottom, 48)
+            .padding(.horizontal, 36)
+            .padding(.top, 20)
+            .padding(.bottom, 64)
         }
         .background(AppAppearance.parchment.ignoresSafeArea())
         .navigationTitle("Precious Promises")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(AppAppearance.parchment, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -44,23 +46,46 @@ struct BrowseView: View {
         }
     }
 
-    private func partBlock(_ part: CatalogPart) -> some View {
-        VStack(alignment: .leading, spacing: 22) {
-            Text(partLabel(part))
+}
+
+/// Named views (not `some View` helpers) so nested TOC rows do not form an opaque-type cycle.
+private struct TOCPartSection: View {
+    let part: CatalogPart
+    @Binding var collapsedChapters: Set<String>
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 28) {
+            Text(partLabel)
                 .font(AppAppearance.uiSans(11, weight: .semibold))
-                .tracking(2.2)
+                .tracking(2.4)
                 .foregroundStyle(AppAppearance.sectionLabel)
                 .frame(maxWidth: .infinity)
 
             ForEach(part.chapters) { chapter in
-                chapterBlock(chapter)
+                TOCChapterSection(chapter: chapter, collapsedChapters: $collapsedChapters)
             }
         }
     }
 
-    private func chapterBlock(_ chapter: CatalogChapter) -> some View {
-        let collapsed = collapsedChapters.contains(chapter.id)
-        return VStack(alignment: .leading, spacing: 14) {
+    private var partLabel: String {
+        switch part.id {
+        case "part-1": return "PART I"
+        case "part-2": return "PART II"
+        default: return "APPENDIX"
+        }
+    }
+}
+
+private struct TOCChapterSection: View {
+    let chapter: CatalogChapter
+    @Binding var collapsedChapters: Set<String>
+
+    private var collapsed: Bool {
+        collapsedChapters.contains(chapter.id)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 18) {
             Button {
                 if collapsed {
                     collapsedChapters.remove(chapter.id)
@@ -69,63 +94,63 @@ struct BrowseView: View {
                 }
             } label: {
                 Text(chapter.title)
-                    .font(AppAppearance.displaySerif(26))
+                    .font(AppAppearance.displaySerif(28))
                     .foregroundStyle(AppAppearance.ink)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 4)
+                    .padding(.vertical, 6)
             }
             .buttonStyle(.plain)
             .accessibilityHint(collapsed ? "Expands this chapter" : "Collapses this chapter")
 
             if !collapsed {
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 12) {
                     ForEach(chapter.themes) { theme in
-                        themeRows(theme, indent: 0)
+                        TOCThemeNode(theme: theme, indent: 0)
                     }
                 }
             }
         }
     }
+}
 
-    @ViewBuilder
-    private func themeRows(_ theme: CatalogTheme, indent: Int) -> some View {
-        NavigationLink(value: catalog.route(for: theme)) {
-            HStack(alignment: .firstTextBaseline, spacing: 10) {
-                if let number = theme.number {
-                    Text(number + ".")
-                        .font(AppAppearance.displaySerif(18))
-                        .foregroundStyle(AppAppearance.ink)
-                        .frame(width: 36, alignment: .trailing)
-                    Text(theme.title)
-                        .font(AppAppearance.displaySerif(18))
-                        .foregroundStyle(AppAppearance.ink)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                } else {
-                    Text(theme.title)
-                        .font(AppAppearance.displaySerif(16))
-                        .foregroundStyle(AppAppearance.ink.opacity(0.86))
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, CGFloat(36 + indent * 18))
+private struct TOCThemeNode: View {
+    let theme: CatalogTheme
+    let indent: Int
+    @Environment(CatalogStore.self) private var catalog
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            NavigationLink(value: catalog.route(for: theme)) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    if let number = theme.number {
+                        Text(number + ".")
+                            .font(AppAppearance.displaySerif(19))
+                            .foregroundStyle(AppAppearance.ink)
+                            .frame(width: 44, alignment: .trailing)
+                        Text(theme.title)
+                            .font(AppAppearance.displaySerif(19))
+                            .foregroundStyle(AppAppearance.ink)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    } else {
+                        Text(theme.title)
+                            .font(AppAppearance.displaySerif(17))
+                            .foregroundStyle(AppAppearance.ink.opacity(0.88))
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, CGFloat(44 + indent * 20))
+                    }
                 }
+                .padding(.vertical, 4)
+                .contentShape(Rectangle())
             }
-            .padding(.vertical, 3)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
+            .buttonStyle(.plain)
 
-        ForEach(theme.children) { child in
-            themeRows(child, indent: indent + 1)
-        }
-    }
-
-    private func partLabel(_ part: CatalogPart) -> String {
-        switch part.id {
-        case "part-1": return "PART I"
-        case "part-2": return "PART II"
-        default: return "APPENDIX"
+            ForEach(theme.children) { child in
+                // AnyView breaks the `some View` cycle at the only recursive TOC edge.
+                AnyView(TOCThemeNode(theme: child, indent: indent + 1))
+            }
         }
     }
 }
@@ -149,16 +174,14 @@ private struct ThemeReader: View {
     let theme: CatalogTheme
     let route: ThemeRoute
     @Environment(CatalogStore.self) private var catalog
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    locationPill
-                        .padding(.bottom, 22)
-
                     titleBlock
-                        .padding(.bottom, theme.verses.isEmpty ? 10 : 22)
+                        .padding(.bottom, theme.verses.isEmpty ? 8 : 16)
 
                     if !theme.verses.isEmpty {
                         verseColumn(theme.verses, heading: nil)
@@ -168,9 +191,9 @@ private struct ThemeReader: View {
                         childBlock(child)
                     }
                 }
-                .padding(.horizontal, 26)
-                .padding(.top, 10)
-                .padding(.bottom, 56)
+                .padding(.horizontal, 24)
+                .padding(.top, 8)
+                .padding(.bottom, 48)
             }
             .background(AppAppearance.parchment.ignoresSafeArea())
             .onAppear {
@@ -178,24 +201,27 @@ private struct ThemeReader: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(false)
+        .toolbarBackground(AppAppearance.parchment, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text(shortTitle)
-                    .font(AppAppearance.uiSans(13, weight: .semibold))
-                    .foregroundStyle(AppAppearance.accent)
-                    .lineLimit(1)
+                Button {
+                    dismiss()
+                } label: {
+                    Text(catalog.locationLabel(for: theme))
+                        .font(AppAppearance.uiSans(11, weight: .semibold))
+                        .foregroundStyle(AppAppearance.parchment)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(AppAppearance.locationPill, in: Capsule())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Back to contents, \(catalog.locationLabel(for: theme))")
             }
         }
-    }
-
-    private var locationPill: some View {
-        Text(catalog.locationLabel(for: theme))
-            .font(AppAppearance.uiSans(11, weight: .semibold))
-            .tracking(0.4)
-            .foregroundStyle(AppAppearance.parchment)
-            .padding(.horizontal, 14)
-            .padding(.vertical, 7)
-            .background(AppAppearance.locationPill, in: Capsule())
     }
 
     private var titleBlock: some View {
@@ -215,11 +241,11 @@ private struct ThemeReader: View {
     private func childBlock(_ child: CatalogTheme) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(child.title.uppercased())
-                .font(AppAppearance.uiSans(12, weight: .medium))
-                .tracking(1.4)
+                .font(AppAppearance.uiSans(11, weight: .medium))
+                .tracking(1.6)
                 .foregroundStyle(AppAppearance.sectionLabel)
-                .padding(.top, 26)
-                .padding(.bottom, 10)
+                .padding(.top, 20)
+                .padding(.bottom, 8)
                 .id(child.id)
 
             if !child.verses.isEmpty {
@@ -228,30 +254,26 @@ private struct ThemeReader: View {
 
             ForEach(child.children) { grand in
                 Text(grand.title)
-                    .font(AppAppearance.uiSans(12, weight: .regular))
+                    .font(AppAppearance.uiSans(11, weight: .regular))
                     .foregroundStyle(AppAppearance.sectionLabel)
-                    .padding(.top, 16)
-                    .padding(.bottom, 8)
-                    .padding(.leading, 14)
+                    .padding(.top, 12)
+                    .padding(.bottom, 6)
+                    .padding(.leading, 20)
                     .id(grand.id)
 
                 verseColumn(grand.verses, heading: nil)
-                    .padding(.leading, 14)
+                    .padding(.leading, 20)
             }
         }
     }
 
     private func verseColumn(_ verses: [CatalogVerse], heading: String?) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 11) {
             ForEach(verses) { verse in
                 ReaderVerseBlock(verse: verse, emphasized: verse.id == route.highlightVerseID)
                     .id(verse.id)
             }
         }
-    }
-
-    private var shortTitle: String {
-        theme.title
     }
 
     private func scroll(using proxy: ScrollViewProxy) {
