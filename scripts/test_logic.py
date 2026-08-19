@@ -39,13 +39,8 @@ def bible_com_url(book: str, chapter: int, verse: int) -> str:
     return f"https://www.bible.com/bible/59/{code}.{chapter}.{verse}"
 
 
-def bible_gateway_url(
-    book: str, chapter: int, verse: int, end_verse: int | None, version: str
-) -> str:
-    if end_verse and end_verse != verse:
-        search = f"{book} {chapter}:{verse}-{end_verse}"
-    else:
-        search = f"{book} {chapter}:{verse}"
+def bible_gateway_url(reference: str, version: str) -> str:
+    search = reference.replace("–", "-").replace("—", "-")
     encoded = quote(search, safe=":")
     return f"https://www.biblegateway.com/passage/?search={encoded}&version={version}"
 
@@ -86,15 +81,15 @@ def main() -> int:
     assert bible_com_url("John", 3, 16) == "https://www.bible.com/bible/59/JHN.3.16"
     assert bible_com_url("Ephesians", 2, 18) == "https://www.bible.com/bible/59/EPH.2.18"
     assert (
-        bible_gateway_url("John", 3, 16, None, "ESV")
-        == "https://www.biblegateway.com/passage/?search=John%203:16&version=ESV"
+        bible_gateway_url("Psalm 37:3", "ESV")
+        == "https://www.biblegateway.com/passage/?search=Psalm%2037:3&version=ESV"
     )
     assert (
-        bible_gateway_url("Psalms", 23, 1, 6, "NASB")
-        == "https://www.biblegateway.com/passage/?search=Psalms%2023:1-6&version=NASB"
+        bible_gateway_url("Psalm 23:1–6", "NASB")
+        == "https://www.biblegateway.com/passage/?search=Psalm%2023:1-6&version=NASB"
     )
     assert (
-        bible_gateway_url("1 Peter", 2, 4, 5, "NIV")
+        bible_gateway_url("1 Peter 2:4-5", "NIV")
         == "https://www.biblegateway.com/passage/?search=1%20Peter%202:4-5&version=NIV"
     )
 

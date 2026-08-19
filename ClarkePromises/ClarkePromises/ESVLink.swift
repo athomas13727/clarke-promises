@@ -43,30 +43,15 @@ enum ESVLink {
         }
     }
 
-    /// Bible Gateway passage page. Search is the reference only — no translation text.
+    /// Bible Gateway passage page. Search is Clark's reference — no translation text.
     static func bibleGatewayURL(for verse: CatalogVerse, version: BibleGatewayVersion) -> URL {
-        bibleGatewayURL(
-            book: verse.book,
-            chapter: verse.chapter,
-            verse: verse.verse,
-            endVerse: verse.endVerse,
-            version: version
-        )
+        bibleGatewayURL(reference: verse.displayRef, version: version)
     }
 
-    static func bibleGatewayURL(
-        book: String,
-        chapter: Int,
-        verse: Int,
-        endVerse: Int?,
-        version: BibleGatewayVersion
-    ) -> URL {
-        let search: String
-        if let endVerse, endVerse != verse {
-            search = "\(book) \(chapter):\(verse)-\(endVerse)"
-        } else {
-            search = "\(book) \(chapter):\(verse)"
-        }
+    static func bibleGatewayURL(reference: String, version: BibleGatewayVersion) -> URL {
+        let search = reference
+            .replacingOccurrences(of: "–", with: "-")
+            .replacingOccurrences(of: "—", with: "-")
         var comps = URLComponents()
         comps.scheme = "https"
         comps.host = "www.biblegateway.com"
