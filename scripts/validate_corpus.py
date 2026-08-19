@@ -90,7 +90,9 @@ def main() -> int:
 
     flattened_titles = {
         "Food and Raiment",
+        "Food and raiment",
         "Long Life and Health",
+        "Long life and health",
         "Sickness, Child-bearing, and Old Age",
         "Deliverance from War and Enemies",
         "Slanders and Reproach",
@@ -98,6 +100,22 @@ def main() -> int:
     for theme in themes:
         if theme["title"] in flattened_titles and not theme.get("children"):
             fail(f"flattened head still present: {theme['title']}")
+        number = theme.get("number")
+        if number not in (None, "") and not str(number).isdigit():
+            fail(f"{theme['id']} number must be Arabic digits, got {number!r}")
+
+    required_titles = {
+        "p1-c1-general": "General promises to believers",
+        "p1-c1-food-raiment": "Food and raiment",
+        "p1-c1-long-life-health": "Long life and health",
+        "p1-c1-peace": "Promises of peace",
+    }
+    for theme_id, title in required_titles.items():
+        node = find(top, theme_id)
+        if node is None:
+            fail(f"missing required theme {theme_id}")
+        if node["title"] != title:
+            fail(f"{theme_id} title must be {title!r}, got {node['title']!r}")
 
     for parent_id, child_ids in REQUIRED_CHILDREN.items():
         parent = find(top, parent_id)
@@ -111,7 +129,7 @@ def main() -> int:
     free = find(top, "p1-c3-free-access")
     if not free:
         fail("missing required theme p1-c3-free-access")
-    if free["title"] != "Free Access to God, with Acceptance":
+    if free["title"] != "Free access to God, with acceptance":
         fail("Free Access title does not match Clark")
     osises = {v["osis"] for v in free.get("verses") or []}
     for needed in ("Eph.2.18", "Eph.3.12", "Heb.10.19-20"):

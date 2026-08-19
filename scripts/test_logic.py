@@ -75,6 +75,20 @@ def main() -> int:
     assert bible_com_url("John", 3, 16) == "https://www.bible.com/bible/59/JHN.3.16"
     assert bible_com_url("Ephesians", 2, 18) == "https://www.bible.com/bible/59/EPH.2.18"
 
+    titles = {}
+    for part in data["parts"]:
+        for chapter in part["chapters"]:
+            for theme in walk(chapter["themes"]):
+                titles[theme["id"]] = theme["title"]
+                number = theme.get("number")
+                if number not in (None, "") and not str(number).isdigit():
+                    raise AssertionError(f"{theme['id']} still has Roman number {number!r}")
+
+    assert titles["p1-c1-general"] == "General promises to believers"
+    assert titles["p1-c1-food-raiment"] == "Food and raiment"
+    assert titles["p1-c1-long-life-health"] == "Long life and health"
+    assert titles["p1-c1-peace"] == "Promises of peace"
+
     access = search(data, "access")
     assert any(h["theme"]["id"] == "p1-c3-free-access" for h in access), access[:3]
 

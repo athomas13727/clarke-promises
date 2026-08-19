@@ -39,12 +39,14 @@ website split:
 Printed page *N* in that edition corresponds to EPUB `page_{N+90}.html`.
 
 The bundled JSON keeps Clark's **nested heads**: each theme has a `number`
-(roman, or omitted for sub-heads), optional `verses`, and optional
-`children`. Food/Raiment, Long life/Health, the trouble triad, sickness
-and old age, war/enemies, slander/reproach, and the large trees under
-Justification, Converting grace, Knowledge, Interest in God, Interest in
-Christ, the Spirit, and Heaven are stored as children — not flattened
-into the parent title.
+(Arabic, or omitted for sub-heads), optional `verses`, and optional
+`children`. Visible TOC labels are Clark/Aaron sentence-case book heads
+(not Stewart-site four-part titles, and not 1895 running-head quirks such
+as “Particularly of…”). Food/Raiment, Long life/Health, the trouble triad,
+sickness and old age, war/enemies, slander/reproach, and the large trees
+under Justification, Converting grace, Knowledge, Interest in God,
+Interest in Christ, the Spirit, and Heaven are stored as children — not
+flattened into the parent title.
 
 `scripts/theme_tree.py` is the outline. Rebuild with `build_corpus.py`.
 

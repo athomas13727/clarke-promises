@@ -6,6 +6,7 @@ EPUB leaf = printed page + 90. Markers slice same-page sibling heads.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 
 
@@ -20,6 +21,112 @@ class Node:
     start_marker: str | None = None
     end_marker: str | None = None
     children: list[Node] = field(default_factory=list)
+
+
+# Clark / Aaron TOC labels (sentence case). EPUB start_marker strings stay 1895.
+# Do not adopt the Stewart-site four-part split; only the book-head wording.
+LABELS = {
+    "p1-c1-general": "General promises to believers",
+    "p1-c1-temporal-general": "Temporal blessings in general",
+    "p1-c1-food-raiment": "Food and raiment",
+    "p1-c1-food": "Food",
+    "p1-c1-raiment": "Raiment",
+    "p1-c1-long-life-health": "Long life and health",
+    "p1-c1-long-life": "Long life",
+    "p1-c1-health": "Health",
+    "p1-c1-safety": "Safety under the divine protection",
+    "p1-c1-peace": "Promises of peace",
+    "p1-c1-direction": "Direction",
+    "p1-c1-honour": "Honour",
+    "p1-c1-success": "Success and prosperity",
+    "p1-c1-plenty": "Plenty and riches",
+    "p1-c1-children": "Of children",
+    "p1-c1-blessing-all": "A blessing upon all the believer has",
+    "p1-c1-blessing-children": "A blessing upon the children of believers",
+    "p1-c1-family": "A blessing upon his family",
+    "p1-c2-support": "Support under trouble",
+    "p1-c2-war-enemies": "Deliverance from war and enemies",
+    "p1-c2-slander-reproach": "From slander and reproach",
+    "p1-c2-stranger": "Promises to the stranger and exile",
+    "p1-c3-converting": "Of converting grace",
+    "p1-c3-fruit-old-age": "In old age",
+    "p1-c3-means": "The means of grace",
+    "p1-c2-slander": "Slander",
+    "p2-c1-loving-word": "Loving the Word",
+    "p2-c1-supper": "The Lord's Supper",
+}
+
+_ROMAN = {
+    "I": "1",
+    "II": "2",
+    "III": "3",
+    "IV": "4",
+    "V": "5",
+    "VI": "6",
+    "VII": "7",
+    "VIII": "8",
+    "IX": "9",
+    "X": "10",
+    "XI": "11",
+    "XII": "12",
+    "XIII": "13",
+    "XIV": "14",
+    "XV": "15",
+    "XVI": "16",
+    "XVII": "17",
+    "XVIII": "18",
+    "XIX": "19",
+    "XX": "20",
+    "XXI": "21",
+    "XXII": "22",
+    "XXIII": "23",
+    "XXIV": "24",
+}
+
+_PHRASES = (
+    ("holy ghost", "Holy Ghost"),
+    ("lord's supper", "Lord's Supper"),
+    ("lord's", "Lord's"),
+    ("god's", "God's"),
+    ("word of god", "Word of God"),
+    ("antichrist", "Antichrist"),
+)
+
+_WORDS = (
+    ("god", "God"),
+    ("christ", "Christ"),
+    ("gospel", "Gospel"),
+    ("church", "Church"),
+    ("sabbath", "Sabbath"),
+    ("jews", "Jews"),
+    ("babylon", "Babylon"),
+    ("scripture", "Scripture"),
+    ("israel", "Israel"),
+    ("spirit", "Spirit"),
+)
+
+
+def arabic_number(number: str | None) -> str | None:
+    if number is None:
+        return None
+    if number.isdigit():
+        return number
+    return _ROMAN.get(number, number)
+
+
+def sentence_case(title: str) -> str:
+    text = title.lower()
+    for src, dst in _PHRASES:
+        text = re.sub(rf"\b{re.escape(src)}\b", dst, text)
+    for src, dst in _WORDS:
+        text = re.sub(rf"\b{re.escape(src)}\b", dst, text)
+    if text:
+        text = text[0].upper() + text[1:]
+    return text
+
+
+def display_title(theme_id: str, title: str) -> str:
+    return LABELS.get(theme_id, sentence_case(title))
 
 
 FREE_ACCESS = [
@@ -94,10 +201,10 @@ def n(
 ) -> Node:
     return Node(
         id=id,
-        title=title,
+        title=display_title(id, title),
         start=start,
         end=end,
-        number=number,
+        number=arabic_number(number),
         curated=curated,
         start_marker=start_marker,
         end_marker=end_marker,

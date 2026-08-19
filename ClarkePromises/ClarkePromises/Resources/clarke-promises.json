@@ -37,8 +37,8 @@
           "themes": [
             {
               "id": "p1-c1-general",
-              "number": "I",
-              "title": "General Promises to the Good",
+              "number": "1",
+              "title": "General promises to believers",
               "sourcePage": 1,
               "verses": [
                 {
@@ -205,8 +205,8 @@
             },
             {
               "id": "p1-c1-temporal-general",
-              "number": "II",
-              "title": "Promises of Temporal Blessings in General",
+              "number": "2",
+              "title": "Temporal blessings in general",
               "sourcePage": 3,
               "verses": [
                 {
@@ -293,8 +293,8 @@
             },
             {
               "id": "p1-c1-food-raiment",
-              "number": "III",
-              "title": "Particularly of Food and Raiment",
+              "number": "3",
+              "title": "Food and raiment",
               "sourcePage": 4,
               "verses": [
                 {
@@ -429,14 +429,14 @@
             },
             {
               "id": "p1-c1-long-life-health",
-              "number": "IV",
-              "title": "Of Long Life",
+              "number": "4",
+              "title": "Long life and health",
               "sourcePage": 5,
               "children": [
                 {
                   "id": "p1-c1-long-life",
                   "number": null,
-                  "title": "Long Life",
+                  "title": "Long life",
                   "sourcePage": 5,
                   "verses": [
                     {
@@ -563,8 +563,8 @@
             },
             {
               "id": "p1-c1-safety",
-              "number": "V",
-              "title": "Safety under the Divine Protection",
+              "number": "5",
+              "title": "Safety under the divine protection",
               "sourcePage": 7,
               "verses": [
                 {
@@ -831,8 +831,8 @@
             },
             {
               "id": "p1-c1-peace",
-              "number": "VI",
-              "title": "Peace",
+              "number": "6",
+              "title": "Promises of peace",
               "sourcePage": 11,
               "verses": [
                 {
@@ -929,7 +929,7 @@
             },
             {
               "id": "p1-c1-direction",
-              "number": "VII",
+              "number": "7",
               "title": "Direction",
               "sourcePage": 12,
               "verses": [
@@ -1027,7 +1027,7 @@
             },
             {
               "id": "p1-c1-honour",
-              "number": "VIII",
+              "number": "8",
               "title": "Honour",
               "sourcePage": 12,
               "verses": [
@@ -1125,8 +1125,8 @@
             },
             {
               "id": "p1-c1-success",
-              "number": "IX",
-              "title": "Success and Prosperity",
+              "number": "9",
+              "title": "Success and prosperity",
               "sourcePage": 14,
               "verses": [
                 {
@@ -1193,8 +1193,8 @@
             },
             {
               "id": "p1-c1-plenty",
-              "number": "X",
-              "title": "Plenty and Riches",
+              "number": "10",
+              "title": "Plenty and riches",
               "sourcePage": 15,
               "verses": [
                 {
@@ -1321,8 +1321,8 @@
             },
             {
               "id": "p1-c1-children",
-              "number": "XI",
-              "title": "Children",
+              "number": "11",
+              "title": "Of children",
               "sourcePage": 17,
               "verses": [
                 {
@@ -1369,8 +1369,8 @@
             },
             {
               "id": "p1-c1-blessing-all",
-              "number": "XII",
-              "title": "A Blessing upon all a Good Man has",
+              "number": "12",
+              "title": "A blessing upon all the believer has",
               "sourcePage": 17,
               "verses": [
                 {
@@ -1477,8 +1477,8 @@
             },
             {
               "id": "p1-c1-blessing-children",
-              "number": "XIII",
-              "title": "A Blessing upon his Children",
+              "number": "13",
+              "title": "A blessing upon the children of believers",
               "sourcePage": 19,
               "verses": [
                 {
@@ -1545,8 +1545,8 @@
             },
             {
               "id": "p1-c1-family",
-              "number": "XIV",
-              "title": "A Blessing upon his Family",
+              "number": "14",
+              "title": "A blessing upon his family",
               "sourcePage": 20,
               "verses": [
                 {
@@ -1630,8 +1630,8 @@
           "themes": [
             {
               "id": "p1-c2-in-general",
-              "number": "I",
-              "title": "In General",
+              "number": "1",
+              "title": "In general",
               "sourcePage": 21,
               "verses": [
                 {
@@ -1739,7 +1739,7 @@
                 {
                   "id": "p1-c2-preservation",
                   "number": null,
-                  "title": "Preservation from Trouble",
+                  "title": "Preservation from trouble",
                   "sourcePage": 21,
                   "verses": [
                     {
@@ -1807,7 +1807,7 @@
                 {
                   "id": "p1-c2-deliverance",
                   "number": null,
-                  "title": "Deliverance out of Trouble",
+                  "title": "Deliverance out of trouble",
                   "sourcePage": 22,
                   "verses": [
                     {
@@ -1925,7 +1925,7 @@
                 {
                   "id": "p1-c2-support",
                   "number": null,
-                  "title": "Support under it",
+                  "title": "Support under trouble",
                   "sourcePage": 24,
                   "verses": [
                     {
@@ -2134,8 +2134,8 @@
             },
             {
               "id": "p1-c2-sickness-head",
-              "number": "II",
-              "title": "Promises relating to Sickness",
+              "number": "2",
+              "title": "Promises relating to sickness",
               "sourcePage": 28,
               "verses": [
                 {
@@ -2279,7 +2279,7 @@
                 {
                   "id": "p1-c2-old-age",
                   "number": null,
-                  "title": "Old Age",
+                  "title": "Old age",
                   "sourcePage": 30,
                   "verses": [
                     {
@@ -2318,8 +2318,8 @@
             },
             {
               "id": "p1-c2-famine",
-              "number": "III",
-              "title": "Deliverance from Famine and Want",
+              "number": "3",
+              "title": "Deliverance from famine and want",
               "sourcePage": 31,
               "verses": [
                 {
@@ -2386,8 +2386,8 @@
             },
             {
               "id": "p1-c2-war-enemies",
-              "number": "IV",
-              "title": "From War and Enemies",
+              "number": "4",
+              "title": "Deliverance from war and enemies",
               "sourcePage": 32,
               "verses": [
                 {
@@ -2445,7 +2445,7 @@
                 {
                   "id": "p1-c2-war",
                   "number": null,
-                  "title": "From War",
+                  "title": "From war",
                   "sourcePage": 32,
                   "verses": [
                     {
@@ -2473,7 +2473,7 @@
                 {
                   "id": "p1-c2-enemies",
                   "number": null,
-                  "title": "From Enemies",
+                  "title": "From enemies",
                   "sourcePage": 33,
                   "verses": [
                     {
@@ -2662,8 +2662,8 @@
             },
             {
               "id": "p1-c2-oppression",
-              "number": "V",
-              "title": "From Oppression and Injustice",
+              "number": "5",
+              "title": "From oppression and injustice",
               "sourcePage": 36,
               "verses": [
                 {
@@ -2780,14 +2780,14 @@
             },
             {
               "id": "p1-c2-slander-reproach",
-              "number": "VI",
-              "title": "From Slanders and Reproach",
+              "number": "6",
+              "title": "From slander and reproach",
               "sourcePage": 38,
               "children": [
                 {
                   "id": "p1-c2-slander",
                   "number": null,
-                  "title": "Slanders",
+                  "title": "Slander",
                   "sourcePage": 38,
                   "verses": [
                     {
@@ -2904,8 +2904,8 @@
             },
             {
               "id": "p1-c2-witchcraft",
-              "number": "VII",
-              "title": "From Witchcraft",
+              "number": "7",
+              "title": "From witchcraft",
               "sourcePage": 39,
               "verses": [
                 {
@@ -2952,8 +2952,8 @@
             },
             {
               "id": "p1-c2-stranger",
-              "number": "VIII",
-              "title": "To the Stranger and Exile",
+              "number": "8",
+              "title": "Promises to the stranger and exile",
               "sourcePage": 39,
               "verses": [
                 {
@@ -3000,8 +3000,8 @@
             },
             {
               "id": "p1-c2-poor",
-              "number": "IX",
-              "title": "To the Poor and Helpless",
+              "number": "9",
+              "title": "To the poor and helpless",
               "sourcePage": 40,
               "verses": [
                 {
@@ -3098,8 +3098,8 @@
             },
             {
               "id": "p1-c2-fatherless",
-              "number": "X",
-              "title": "To the Fatherless and Widow",
+              "number": "10",
+              "title": "To the fatherless and widow",
               "sourcePage": 41,
               "verses": [
                 {
@@ -3206,8 +3206,8 @@
             },
             {
               "id": "p1-c2-childless",
-              "number": "XI",
-              "title": "To the Childless",
+              "number": "11",
+              "title": "To the childless",
               "sourcePage": 43,
               "verses": [
                 {
@@ -3264,8 +3264,8 @@
             },
             {
               "id": "p1-c2-captive",
-              "number": "XII",
-              "title": "To the Prisoner and Captive",
+              "number": "12",
+              "title": "To the prisoner and captive",
               "sourcePage": 43,
               "verses": [
                 {
@@ -3322,8 +3322,8 @@
             },
             {
               "id": "p1-c2-death",
-              "number": "XIII",
-              "title": "Deliverance from Death",
+              "number": "13",
+              "title": "Deliverance from death",
               "sourcePage": 44,
               "verses": [
                 {
@@ -3457,8 +3457,8 @@
           "themes": [
             {
               "id": "p1-c3-spiritual-general",
-              "number": "I",
-              "title": "In General",
+              "number": "1",
+              "title": "In general",
               "sourcePage": 46,
               "verses": [
                 {
@@ -3515,8 +3515,8 @@
             },
             {
               "id": "p1-c3-justification",
-              "number": "II",
-              "title": "Of Justification",
+              "number": "2",
+              "title": "Of justification",
               "sourcePage": 47,
               "verses": [
                 {
@@ -3652,7 +3652,7 @@
                 {
                   "id": "p1-c3-pardon",
                   "number": null,
-                  "title": "Pardon of Sin",
+                  "title": "Pardon of sin",
                   "sourcePage": 49,
                   "verses": [
                     {
@@ -3840,7 +3840,7 @@
                     {
                       "id": "p1-c3-pardon-heinous",
                       "number": null,
-                      "title": "Of the most heinous Sins",
+                      "title": "Of the most heinous sins",
                       "sourcePage": 51,
                       "verses": [
                         {
@@ -3898,7 +3898,7 @@
                     {
                       "id": "p1-c3-pardon-all",
                       "number": null,
-                      "title": "Of all Sins",
+                      "title": "Of all sins",
                       "sourcePage": 51,
                       "verses": [
                         {
@@ -3956,7 +3956,7 @@
                     {
                       "id": "p1-c3-pardon-backsliding",
                       "number": null,
-                      "title": "Of Backslidings",
+                      "title": "Of backslidings",
                       "sourcePage": 51,
                       "verses": [
                         {
@@ -4193,7 +4193,7 @@
             },
             {
               "id": "p1-c3-adoption",
-              "number": "III",
+              "number": "3",
               "title": "Adoption",
               "sourcePage": 55,
               "verses": [
@@ -4341,8 +4341,8 @@
             },
             {
               "id": "p1-c3-union",
-              "number": "IV",
-              "title": "Union and Communion with the Church",
+              "number": "4",
+              "title": "Union and communion with the Church",
               "sourcePage": 57,
               "verses": [
                 {
@@ -4439,8 +4439,8 @@
             },
             {
               "id": "p1-c3-free-access",
-              "number": "V",
-              "title": "Free Access to God, with Acceptance",
+              "number": "5",
+              "title": "Free access to God, with acceptance",
               "sourcePage": 59,
               "verses": [
                 {
@@ -4507,8 +4507,8 @@
             },
             {
               "id": "p1-c3-hearing-prayer",
-              "number": "VI",
-              "title": "Of Hearing Prayer",
+              "number": "6",
+              "title": "Of hearing prayer",
               "sourcePage": 60,
               "verses": [
                 {
@@ -4725,8 +4725,8 @@
             },
             {
               "id": "p1-c3-sanctifying",
-              "number": "VII",
-              "title": "Of Sanctifying Grace in general",
+              "number": "7",
+              "title": "Of sanctifying grace in general",
               "sourcePage": 63,
               "verses": [
                 {
@@ -4853,14 +4853,14 @@
             },
             {
               "id": "p1-c3-converting",
-              "number": "VIII",
-              "title": "Particularly of Converting Grace",
+              "number": "8",
+              "title": "Of converting grace",
               "sourcePage": 65,
               "children": [
                 {
                   "id": "p1-c3-converting-head",
                   "number": null,
-                  "title": "Converting Grace",
+                  "title": "Converting grace",
                   "sourcePage": 65,
                   "verses": [
                     {
@@ -4958,7 +4958,7 @@
                 {
                   "id": "p1-c3-repentance-grace",
                   "number": null,
-                  "title": "The Grace of Repentance",
+                  "title": "The grace of repentance",
                   "sourcePage": 67,
                   "verses": [
                     {
@@ -5006,7 +5006,7 @@
                 {
                   "id": "p1-c3-faith-grace",
                   "number": null,
-                  "title": "The Grace of Faith",
+                  "title": "The grace of faith",
                   "sourcePage": 68,
                   "verses": [
                     {
@@ -5043,8 +5043,8 @@
             },
             {
               "id": "p1-c3-knowledge",
-              "number": "IX",
-              "title": "Of Knowledge",
+              "number": "9",
+              "title": "Of knowledge",
               "sourcePage": 69,
               "verses": [
                 {
@@ -5218,7 +5218,7 @@
                 {
                   "id": "p1-c3-teaching",
                   "number": null,
-                  "title": "Divine Teaching",
+                  "title": "Divine teaching",
                   "sourcePage": 71,
                   "verses": [
                     {
@@ -5296,7 +5296,7 @@
                 {
                   "id": "p1-c3-guidance",
                   "number": null,
-                  "title": "Divine Guidance",
+                  "title": "Divine guidance",
                   "sourcePage": 72,
                   "verses": [
                     {
@@ -5394,7 +5394,7 @@
                 {
                   "id": "p1-c3-discourse-ability",
                   "number": null,
-                  "title": "Ability for Good Discourse",
+                  "title": "Ability for good discourse",
                   "sourcePage": 73,
                   "verses": [
                     {
@@ -5453,8 +5453,8 @@
             },
             {
               "id": "p1-c3-means",
-              "number": "X",
-              "title": "Of the Means of Grace",
+              "number": "10",
+              "title": "The means of grace",
               "sourcePage": 73,
               "verses": [
                 {
@@ -5472,7 +5472,7 @@
                 {
                   "id": "p1-c3-means-head",
                   "number": null,
-                  "title": "The Means of Grace",
+                  "title": "The means of grace",
                   "sourcePage": 73,
                   "verses": [
                     {
@@ -5590,7 +5590,7 @@
                 {
                   "id": "p1-c3-means-blessing",
                   "number": null,
-                  "title": "A Blessing upon them",
+                  "title": "A blessing upon them",
                   "sourcePage": 75,
                   "verses": [
                     {
@@ -5729,14 +5729,14 @@
             },
             {
               "id": "p1-c3-against-sin",
-              "number": "XI",
-              "title": "Grace against Sin and Temptation",
+              "number": "11",
+              "title": "Grace against sin and temptation",
               "sourcePage": 77,
               "children": [
                 {
                   "id": "p1-c3-mortify",
                   "number": null,
-                  "title": "To mortify Sin",
+                  "title": "To mortify sin",
                   "sourcePage": 77,
                   "verses": [
                     {
@@ -5804,7 +5804,7 @@
                 {
                   "id": "p1-c3-temptation",
                   "number": null,
-                  "title": "Against Temptation",
+                  "title": "Against temptation",
                   "sourcePage": 78,
                   "verses": [
                     {
@@ -5852,7 +5852,7 @@
                 {
                   "id": "p1-c3-enticements",
                   "number": null,
-                  "title": "To preserve from the Enticements of Sinners",
+                  "title": "To preserve from the enticements of sinners",
                   "sourcePage": 79,
                   "verses": [
                     {
@@ -5920,7 +5920,7 @@
                 {
                   "id": "p1-c3-world",
                   "number": null,
-                  "title": "Victory over the World",
+                  "title": "Victory over the world",
                   "sourcePage": 79,
                   "verses": [
                     {
@@ -5988,7 +5988,7 @@
                 {
                   "id": "p1-c3-devil",
                   "number": null,
-                  "title": "Victory over the Devil",
+                  "title": "Victory over the devil",
                   "sourcePage": 80,
                   "verses": [
                     {
@@ -6037,8 +6037,8 @@
             },
             {
               "id": "p1-c3-strength",
-              "number": "XII",
-              "title": "Strength, Courage, and Resolution",
+              "number": "12",
+              "title": "Strength, courage, and resolution",
               "sourcePage": 81,
               "verses": [
                 {
@@ -6125,8 +6125,8 @@
             },
             {
               "id": "p1-c3-fruitfulness",
-              "number": "XIII",
-              "title": "Fruitfulness and Increase of Grace",
+              "number": "13",
+              "title": "Fruitfulness and increase of grace",
               "sourcePage": 83,
               "verses": [
                 {
@@ -6184,7 +6184,7 @@
                 {
                   "id": "p1-c3-fruit-old-age",
                   "number": null,
-                  "title": "Particularly in Old Age",
+                  "title": "In old age",
                   "sourcePage": 84,
                   "verses": [
                     {
@@ -6252,7 +6252,7 @@
                 {
                   "id": "p1-c3-meekness-grace",
                   "number": null,
-                  "title": "The Grace of Meekness",
+                  "title": "The grace of meekness",
                   "sourcePage": 85,
                   "verses": [
                     {
@@ -6271,7 +6271,7 @@
             },
             {
               "id": "p1-c3-persevere",
-              "number": "XIV",
+              "number": "14",
               "title": "Grace to persevere",
               "sourcePage": 85,
               "verses": [
@@ -6359,8 +6359,8 @@
             },
             {
               "id": "p1-c3-afflictions",
-              "number": "XV",
-              "title": "Sanctified Afflictions",
+              "number": "15",
+              "title": "Sanctified afflictions",
               "sourcePage": 87,
               "verses": [
                 {
@@ -6617,8 +6617,8 @@
             },
             {
               "id": "p1-c3-believers-children",
-              "number": "XVI",
-              "title": "Grace to the Children of Believers",
+              "number": "16",
+              "title": "Grace to the children of believers",
               "sourcePage": 91,
               "verses": [
                 {
@@ -6665,8 +6665,8 @@
             },
             {
               "id": "p1-c3-interest-god",
-              "number": "XVII",
-              "title": "An Interest in God",
+              "number": "17",
+              "title": "An interest in God",
               "sourcePage": 92,
               "verses": [
                 {
@@ -6822,7 +6822,7 @@
                 {
                   "id": "p1-c3-god-portion",
                   "number": null,
-                  "title": "As our Portion",
+                  "title": "As our portion",
                   "sourcePage": 93,
                   "verses": [
                     {
@@ -6860,7 +6860,7 @@
                 {
                   "id": "p1-c3-god-glory",
                   "number": null,
-                  "title": "Our Glory",
+                  "title": "Our glory",
                   "sourcePage": 94,
                   "verses": [
                     {
@@ -6918,7 +6918,7 @@
                 {
                   "id": "p1-c3-god-presence",
                   "number": null,
-                  "title": "Of his Presence",
+                  "title": "Of his presence",
                   "sourcePage": 94,
                   "verses": [
                     {
@@ -6986,7 +6986,7 @@
                 {
                   "id": "p1-c3-god-love",
                   "number": null,
-                  "title": "His Love",
+                  "title": "His love",
                   "sourcePage": 95,
                   "verses": [
                     {
@@ -7104,7 +7104,7 @@
                 {
                   "id": "p1-c3-god-mercy",
                   "number": null,
-                  "title": "His Mercy",
+                  "title": "His mercy",
                   "sourcePage": 96,
                   "verses": [
                     {
@@ -7252,7 +7252,7 @@
                 {
                   "id": "p1-c3-god-help",
                   "number": null,
-                  "title": "His Help",
+                  "title": "His help",
                   "sourcePage": 98,
                   "verses": [
                     {
@@ -7320,7 +7320,7 @@
                 {
                   "id": "p1-c3-god-care",
                   "number": null,
-                  "title": "His Care",
+                  "title": "His care",
                   "sourcePage": 99,
                   "verses": [
                     {
@@ -7388,7 +7388,7 @@
                 {
                   "id": "p1-c3-god-covenant",
                   "number": null,
-                  "title": "His Covenanting with his people",
+                  "title": "His covenanting with his people",
                   "sourcePage": 100,
                   "verses": [
                     {
@@ -7585,8 +7585,8 @@
             },
             {
               "id": "p1-c3-interest-christ",
-              "number": "XVIII",
-              "title": "An Interest in Christ",
+              "number": "18",
+              "title": "An interest in Christ",
               "sourcePage": 102,
               "verses": [
                 {
@@ -7654,7 +7654,7 @@
                 {
                   "id": "p1-c3-christ-grace",
                   "number": null,
-                  "title": "All Grace from Him",
+                  "title": "All grace from him",
                   "sourcePage": 103,
                   "verses": [
                     {
@@ -7692,7 +7692,7 @@
                 {
                   "id": "p1-c3-christ-redemption",
                   "number": null,
-                  "title": "Redemption by Him",
+                  "title": "Redemption by him",
                   "sourcePage": 104,
                   "verses": [
                     {
@@ -7858,7 +7858,7 @@
                 {
                   "id": "p1-c3-christ-intercession",
                   "number": null,
-                  "title": "His Intercession",
+                  "title": "His intercession",
                   "sourcePage": 107,
                   "verses": [
                     {
@@ -7916,7 +7916,7 @@
                 {
                   "id": "p1-c3-christ-love",
                   "number": null,
-                  "title": "His Love",
+                  "title": "His love",
                   "sourcePage": 107,
                   "verses": [
                     {
@@ -7974,7 +7974,7 @@
                 {
                   "id": "p1-c3-christ-church",
                   "number": null,
-                  "title": "His Care of his Church",
+                  "title": "His care of his Church",
                   "sourcePage": 108,
                   "verses": [
                     {
@@ -8032,7 +8032,7 @@
                 {
                   "id": "p1-c3-christ-presence",
                   "number": null,
-                  "title": "His Presence with his People",
+                  "title": "His presence with his people",
                   "sourcePage": 109,
                   "verses": [
                     {
@@ -8101,7 +8101,7 @@
             },
             {
               "id": "p1-c3-spirit",
-              "number": "XIX",
+              "number": "19",
               "title": "Promises of the Spirit",
               "sourcePage": 109,
               "verses": [
@@ -8210,7 +8210,7 @@
                 {
                   "id": "p1-c3-spirit-teaching",
                   "number": null,
-                  "title": "His Teaching",
+                  "title": "His teaching",
                   "sourcePage": 111,
                   "verses": [
                     {
@@ -8258,7 +8258,7 @@
                 {
                   "id": "p1-c3-spirit-prayer",
                   "number": null,
-                  "title": "His Help in Prayer",
+                  "title": "His help in prayer",
                   "sourcePage": 112,
                   "verses": [
                     {
@@ -8326,7 +8326,7 @@
                 {
                   "id": "p1-c3-spirit-adoption",
                   "number": null,
-                  "title": "To witness our Adoption",
+                  "title": "To witness our adoption",
                   "sourcePage": 112,
                   "verses": [
                     {
@@ -8394,7 +8394,7 @@
                 {
                   "id": "p1-c3-spirit-seal",
                   "number": null,
-                  "title": "To seal our Redemption",
+                  "title": "To seal our redemption",
                   "sourcePage": 112,
                   "verses": [
                     {
@@ -8462,7 +8462,7 @@
                 {
                   "id": "p1-c3-spirit-comforter",
                   "number": null,
-                  "title": "To be our Comforter",
+                  "title": "To be our comforter",
                   "sourcePage": 113,
                   "verses": [
                     {
@@ -8579,8 +8579,8 @@
             },
             {
               "id": "p1-c3-angels",
-              "number": "XX",
-              "title": "The Ministry of Angels",
+              "number": "20",
+              "title": "The ministry of angels",
               "sourcePage": 114,
               "verses": [
                 {
@@ -8647,8 +8647,8 @@
             },
             {
               "id": "p1-c3-kings-priests",
-              "number": "XXI",
-              "title": "That we should be Kings and Priests to God",
+              "number": "21",
+              "title": "That we should be kings and priests to God",
               "sourcePage": 114,
               "verses": [
                 {
@@ -8715,8 +8715,8 @@
             },
             {
               "id": "p1-c3-conscience",
-              "number": "XXII",
-              "title": "Peace of Conscience",
+              "number": "22",
+              "title": "Peace of conscience",
               "sourcePage": 115,
               "verses": [
                 {
@@ -8794,7 +8794,7 @@
                 {
                   "id": "p1-c3-comfort-hope",
                   "number": null,
-                  "title": "Comfort and Hope",
+                  "title": "Comfort and hope",
                   "sourcePage": 116,
                   "verses": [
                     {
@@ -8953,8 +8953,8 @@
             },
             {
               "id": "p1-c3-joy",
-              "number": "XXIII",
-              "title": "Delight and Joy in God",
+              "number": "23",
+              "title": "Delight and joy in God",
               "sourcePage": 118,
               "verses": [
                 {
@@ -9171,8 +9171,8 @@
             },
             {
               "id": "p1-c3-death",
-              "number": "XXIV",
-              "title": "Support in Death",
+              "number": "24",
+              "title": "Support in death",
               "sourcePage": 121,
               "verses": [
                 {
@@ -9266,8 +9266,8 @@
           "themes": [
             {
               "id": "p1-c4-hell",
-              "number": "I",
-              "title": "Deliverance from Hell",
+              "number": "1",
+              "title": "Deliverance from hell",
               "sourcePage": 123,
               "verses": [
                 {
@@ -9324,8 +9324,8 @@
             },
             {
               "id": "p1-c4-after-death",
-              "number": "II",
-              "title": "Happiness immediately after Death",
+              "number": "2",
+              "title": "Happiness immediately after death",
               "sourcePage": 124,
               "verses": [
                 {
@@ -9382,8 +9382,8 @@
             },
             {
               "id": "p1-c4-resurrection",
-              "number": "III",
-              "title": "A Glorious Resurrection",
+              "number": "3",
+              "title": "A glorious resurrection",
               "sourcePage": 125,
               "verses": [
                 {
@@ -9570,8 +9570,8 @@
             },
             {
               "id": "p1-c4-heaven",
-              "number": "IV",
-              "title": "Everlasting Happiness in Heaven",
+              "number": "4",
+              "title": "Everlasting happiness in heaven",
               "sourcePage": 130,
               "verses": [
                 {
@@ -9829,7 +9829,7 @@
                 {
                   "id": "p1-c4-heaven-sorrow",
                   "number": null,
-                  "title": "Freedom from all Sorrow, and great Joy",
+                  "title": "Freedom from all sorrow, and great joy",
                   "sourcePage": 134,
                   "verses": [
                     {
@@ -9935,7 +9935,7 @@
                 {
                   "id": "p1-c4-heaven-kingdom",
                   "number": null,
-                  "title": "A Kingdom",
+                  "title": "A kingdom",
                   "sourcePage": 135,
                   "verses": [
                     {
@@ -10013,7 +10013,7 @@
                 {
                   "id": "p1-c4-heaven-inheritance",
                   "number": null,
-                  "title": "An Inheritance",
+                  "title": "An inheritance",
                   "sourcePage": 136,
                   "verses": [
                     {
@@ -10121,7 +10121,7 @@
                 {
                   "id": "p1-c4-heaven-god",
                   "number": null,
-                  "title": "The Enjoyment of God, and Eternal Life",
+                  "title": "The enjoyment of God, and eternal life",
                   "sourcePage": 136,
                   "verses": [
                     {
@@ -10244,8 +10244,8 @@
           "themes": [
             {
               "id": "p2-c1-faith",
-              "number": "I",
-              "title": "To Faith, particularly in Christ",
+              "number": "1",
+              "title": "To faith, particularly in Christ",
               "sourcePage": 138,
               "verses": [
                 {
@@ -10492,7 +10492,7 @@
             },
             {
               "id": "p2-c1-repentance",
-              "number": "II",
+              "number": "2",
               "title": "Repentance",
               "sourcePage": 142,
               "verses": [
@@ -10661,7 +10661,7 @@
                 {
                   "id": "p2-c1-mourn-land",
                   "number": null,
-                  "title": "To them that mourn for the Wickedness of the Land",
+                  "title": "To them that mourn for the wickedness of the land",
                   "sourcePage": 145,
                   "verses": [
                     {
@@ -10699,7 +10699,7 @@
                 {
                   "id": "p2-c1-repent-affliction",
                   "number": null,
-                  "title": "To Repentance in Affliction",
+                  "title": "To repentance in affliction",
                   "sourcePage": 146,
                   "verses": [
                     {
@@ -10727,7 +10727,7 @@
                 {
                   "id": "p2-c1-confess-sin",
                   "number": null,
-                  "title": "To Confession of Sin",
+                  "title": "To confession of sin",
                   "sourcePage": 147,
                   "verses": [
                     {
@@ -10756,7 +10756,7 @@
             },
             {
               "id": "p2-c1-obedience",
-              "number": "III",
+              "number": "3",
               "title": "Obedience",
               "sourcePage": 148,
               "verses": [
@@ -11124,8 +11124,8 @@
             },
             {
               "id": "p2-c1-sincerity",
-              "number": "IV",
-              "title": "Sincerity and Uprightness",
+              "number": "4",
+              "title": "Sincerity and uprightness",
               "sourcePage": 155,
               "verses": [
                 {
@@ -11292,7 +11292,7 @@
             },
             {
               "id": "p2-c1-love-god",
-              "number": "V",
+              "number": "5",
               "title": "Love to God",
               "sourcePage": 157,
               "verses": [
@@ -11450,8 +11450,8 @@
             },
             {
               "id": "p2-c1-trust",
-              "number": "VI",
-              "title": "Trusting and patiently Waiting on God",
+              "number": "6",
+              "title": "Trusting and patiently waiting on God",
               "sourcePage": 159,
               "verses": [
                 {
@@ -11738,8 +11738,8 @@
             },
             {
               "id": "p2-c1-fear",
-              "number": "VII",
-              "title": "The Fear of God",
+              "number": "7",
+              "title": "The fear of God",
               "sourcePage": 162,
               "verses": [
                 {
@@ -11986,7 +11986,7 @@
             },
             {
               "id": "p2-c1-prayer",
-              "number": "VIII",
+              "number": "8",
               "title": "Prayer",
               "sourcePage": 164,
               "verses": [
@@ -12163,7 +12163,7 @@
                 {
                   "id": "p2-c1-secret-prayer",
                   "number": null,
-                  "title": "Secret Prayer",
+                  "title": "Secret prayer",
                   "sourcePage": 167,
                   "verses": [
                     {
@@ -12319,7 +12319,7 @@
                 {
                   "id": "p2-c1-desires",
                   "number": null,
-                  "title": "Desires of Grace",
+                  "title": "Desires of grace",
                   "sourcePage": 168,
                   "verses": [
                     {
@@ -12378,8 +12378,8 @@
             },
             {
               "id": "p2-c1-wisdom",
-              "number": "IX",
-              "title": "Wisdom and Knowledge",
+              "number": "9",
+              "title": "Wisdom and knowledge",
               "sourcePage": 169,
               "verses": [
                 {
@@ -12587,7 +12587,7 @@
                 {
                   "id": "p2-c1-love-wisdom",
                   "number": null,
-                  "title": "The Love and Study of Wisdom",
+                  "title": "The love and study of wisdom",
                   "sourcePage": 172,
                   "verses": [
                     {
@@ -12665,7 +12665,7 @@
                 {
                   "id": "p2-c1-knowledge-god",
                   "number": null,
-                  "title": "The Knowledge of God and Christ",
+                  "title": "The knowledge of God and Christ",
                   "sourcePage": 173,
                   "verses": [
                     {
@@ -12762,8 +12762,8 @@
             },
             {
               "id": "p2-c1-word",
-              "number": "X",
-              "title": "Hearing and Reading the Word of God",
+              "number": "10",
+              "title": "Hearing and reading the Word of God",
               "sourcePage": 174,
               "verses": [
                 {
@@ -13078,7 +13078,7 @@
             },
             {
               "id": "p2-c1-meditation",
-              "number": "XI",
+              "number": "11",
               "title": "Meditation",
               "sourcePage": 177,
               "verses": [
@@ -13216,14 +13216,14 @@
             },
             {
               "id": "p2-c1-fasting",
-              "number": "XII",
+              "number": "12",
               "title": "Fasting",
               "sourcePage": 179,
               "children": [
                 {
                   "id": "p2-c1-fast-secret",
                   "number": null,
-                  "title": "Fasting in Secret",
+                  "title": "Fasting in secret",
                   "sourcePage": 179,
                   "verses": [
                     {
@@ -13272,7 +13272,7 @@
             },
             {
               "id": "p2-c1-baptism",
-              "number": "XIII",
+              "number": "13",
               "title": "Baptism",
               "sourcePage": 180,
               "verses": [
@@ -13320,7 +13320,7 @@
             },
             {
               "id": "p2-c1-supper",
-              "number": "XIV",
+              "number": "14",
               "title": "The Lord's Supper",
               "sourcePage": 181,
               "verses": [
@@ -13368,8 +13368,8 @@
             },
             {
               "id": "p2-c1-discourse",
-              "number": "XV",
-              "title": "Good Discourse",
+              "number": "15",
+              "title": "Good discourse",
               "sourcePage": 182,
               "verses": [
                 {
@@ -13467,7 +13467,7 @@
                 {
                   "id": "p2-c1-tongue",
                   "number": null,
-                  "title": "Government of the Tongue",
+                  "title": "Government of the tongue",
                   "sourcePage": 184,
                   "verses": [
                     {
@@ -13536,7 +13536,7 @@
             },
             {
               "id": "p2-c1-watch",
-              "number": "XVI",
+              "number": "16",
               "title": "Watchfulness",
               "sourcePage": 184,
               "verses": [
@@ -13604,14 +13604,14 @@
             },
             {
               "id": "p2-c1-company",
-              "number": "XVII",
-              "title": "Keeping Good Company",
+              "number": "17",
+              "title": "Keeping good company",
               "sourcePage": 185,
               "children": [
                 {
                   "id": "p2-c1-avoid-company",
                   "number": null,
-                  "title": "Avoiding Evil Company",
+                  "title": "Avoiding evil company",
                   "sourcePage": 185,
                   "verses": [
                     {
@@ -13690,8 +13690,8 @@
             },
             {
               "id": "p2-c1-oaths",
-              "number": "XVIII",
-              "title": "Performing Oaths",
+              "number": "18",
+              "title": "Performing oaths",
               "sourcePage": 185,
               "verses": [
                 {
@@ -13768,7 +13768,7 @@
             },
             {
               "id": "p2-c1-sabbath",
-              "number": "XIX",
+              "number": "19",
               "title": "Keeping the Sabbath",
               "sourcePage": 186,
               "verses": [
@@ -13833,8 +13833,8 @@
           "themes": [
             {
               "id": "p2-c2-parents",
-              "number": "I",
-              "title": "Obedience to Parents",
+              "number": "1",
+              "title": "Obedience to parents",
               "sourcePage": 187,
               "verses": [
                 {
@@ -13911,8 +13911,8 @@
             },
             {
               "id": "p2-c2-education",
-              "number": "II",
-              "title": "Good Education",
+              "number": "2",
+              "title": "Good education",
               "sourcePage": 189,
               "verses": [
                 {
@@ -13950,7 +13950,7 @@
                 {
                   "id": "p2-c2-correction",
                   "number": null,
-                  "title": "The Correcting of Children",
+                  "title": "The correcting of children",
                   "sourcePage": 190,
                   "verses": [
                     {
@@ -14009,8 +14009,8 @@
             },
             {
               "id": "p2-c2-wife",
-              "number": "III",
-              "title": "A Good Wife",
+              "number": "3",
+              "title": "A good wife",
               "sourcePage": 190,
               "verses": [
                 {
@@ -14067,8 +14067,8 @@
             },
             {
               "id": "p2-c2-servants",
-              "number": "IV",
-              "title": "Faithful Servants",
+              "number": "4",
+              "title": "Faithful servants",
               "sourcePage": 191,
               "verses": [
                 {
@@ -14115,8 +14115,8 @@
             },
             {
               "id": "p2-c2-kings",
-              "number": "V",
-              "title": "Good Kings and Magistrates",
+              "number": "5",
+              "title": "Good kings and magistrates",
               "sourcePage": 192,
               "verses": [
                 {
@@ -14163,8 +14163,8 @@
             },
             {
               "id": "p2-c2-subjects",
-              "number": "VI",
-              "title": "Obedient Subjects",
+              "number": "6",
+              "title": "Obedient subjects",
               "sourcePage": 193,
               "verses": [
                 {
@@ -14211,8 +14211,8 @@
             },
             {
               "id": "p2-c2-ministers",
-              "number": "VII",
-              "title": "Faithful Ministers",
+              "number": "7",
+              "title": "Faithful ministers",
               "sourcePage": 193,
               "verses": [
                 {
@@ -14409,8 +14409,8 @@
             },
             {
               "id": "p2-c2-hear-ministers",
-              "number": "VIII",
-              "title": "To them that receive and hearken to Ministers",
+              "number": "8",
+              "title": "To them that receive and hearken to ministers",
               "sourcePage": 197,
               "verses": [
                 {
@@ -14457,14 +14457,14 @@
             },
             {
               "id": "p2-c2-love",
-              "number": "IX",
-              "title": "Love and Unity",
+              "number": "9",
+              "title": "Love and unity",
               "sourcePage": 198,
               "children": [
                 {
                   "id": "p2-c2-peacemakers",
                   "number": null,
-                  "title": "To the Peace-makers",
+                  "title": "To the peace-makers",
                   "sourcePage": 198,
                   "verses": [
                     {
@@ -14512,7 +14512,7 @@
                 {
                   "id": "p2-c2-love-people",
                   "number": null,
-                  "title": "Love to God's People",
+                  "title": "Love to God's people",
                   "sourcePage": 199,
                   "verses": [
                     {
@@ -14581,8 +14581,8 @@
             },
             {
               "id": "p2-c2-charitable",
-              "number": "X",
-              "title": "To the Charitable, the Merciful, and Liberal",
+              "number": "10",
+              "title": "To the charitable, the merciful, and liberal",
               "sourcePage": 200,
               "verses": [
                 {
@@ -14820,7 +14820,7 @@
                 {
                   "id": "p2-c2-alms",
                   "number": null,
-                  "title": "To Alms in secret",
+                  "title": "To alms in secret",
                   "sourcePage": 205,
                   "verses": [
                     {
@@ -14878,7 +14878,7 @@
                 {
                   "id": "p2-c2-worship",
                   "number": null,
-                  "title": "To supporting God's Worship and Ministers",
+                  "title": "To supporting God's worship and ministers",
                   "sourcePage": 205,
                   "verses": [
                     {
@@ -14976,7 +14976,7 @@
                 {
                   "id": "p2-c2-merciful",
                   "number": null,
-                  "title": "The Merciful",
+                  "title": "The merciful",
                   "sourcePage": 207,
                   "verses": [
                     {
@@ -15045,7 +15045,7 @@
             },
             {
               "id": "p2-c2-reproof",
-              "number": "XI",
+              "number": "11",
               "title": "Reproving faithfully",
               "sourcePage": 207,
               "verses": [
@@ -15114,7 +15114,7 @@
                 {
                   "id": "p2-c2-regarding-reproof",
                   "number": null,
-                  "title": "And regarding Reproof",
+                  "title": "And regarding reproof",
                   "sourcePage": 208,
                   "verses": [
                     {
@@ -15203,8 +15203,8 @@
             },
             {
               "id": "p2-c2-forgive",
-              "number": "XII",
-              "title": "Forgiving Injuries",
+              "number": "12",
+              "title": "Forgiving injuries",
               "sourcePage": 208,
               "verses": [
                 {
@@ -15291,7 +15291,7 @@
             },
             {
               "id": "p2-c2-chastity",
-              "number": "XIII",
+              "number": "13",
               "title": "Chastity",
               "sourcePage": 209,
               "verses": [
@@ -15419,7 +15419,7 @@
             },
             {
               "id": "p2-c2-diligence",
-              "number": "XIV",
+              "number": "14",
               "title": "Diligence",
               "sourcePage": 210,
               "verses": [
@@ -15518,7 +15518,7 @@
                 {
                   "id": "p2-c2-talents",
                   "number": null,
-                  "title": "Improving Talents",
+                  "title": "Improving talents",
                   "sourcePage": 211,
                   "verses": [
                     {
@@ -15616,7 +15616,7 @@
                 {
                   "id": "p2-c2-sleep",
                   "number": null,
-                  "title": "Moderation in Sleep",
+                  "title": "Moderation in sleep",
                   "sourcePage": 212,
                   "verses": [
                     {
@@ -15705,8 +15705,8 @@
             },
             {
               "id": "p2-c2-just",
-              "number": "XV",
-              "title": "The Just and Honest",
+              "number": "15",
+              "title": "The just and honest",
               "sourcePage": 212,
               "verses": [
                 {
@@ -15843,7 +15843,7 @@
             },
             {
               "id": "p2-c2-truth",
-              "number": "XVI",
+              "number": "16",
               "title": "Truth",
               "sourcePage": 214,
               "verses": [
@@ -15911,8 +15911,8 @@
             },
             {
               "id": "p2-c2-candour",
-              "number": "XVII",
-              "title": "Candour in Judging",
+              "number": "17",
+              "title": "Candour in judging",
               "sourcePage": 214,
               "verses": [
                 {
@@ -15980,7 +15980,7 @@
                 {
                   "id": "p2-c2-speaking",
                   "number": null,
-                  "title": "And Speaking",
+                  "title": "And speaking",
                   "sourcePage": 215,
                   "verses": [
                     {
@@ -16059,8 +16059,8 @@
             },
             {
               "id": "p2-c2-contentment",
-              "number": "XVIII",
-              "title": "Contentment and Mortification",
+              "number": "18",
+              "title": "Contentment and mortification",
               "sourcePage": 215,
               "verses": [
                 {
@@ -16184,8 +16184,8 @@
           "themes": [
             {
               "id": "p2-c3-meek",
-              "number": "I",
-              "title": "To the Meek",
+              "number": "1",
+              "title": "To the meek",
               "sourcePage": 217,
               "verses": [
                 {
@@ -16333,7 +16333,7 @@
                 {
                   "id": "p2-c3-humble",
                   "number": null,
-                  "title": "And the Humble",
+                  "title": "And the humble",
                   "sourcePage": 219,
                   "verses": [
                     {
@@ -16451,7 +16451,7 @@
                 {
                   "id": "p2-c3-contrite",
                   "number": null,
-                  "title": "The Contrite and Mourners",
+                  "title": "The contrite and mourners",
                   "sourcePage": 220,
                   "verses": [
                     {
@@ -16510,8 +16510,8 @@
             },
             {
               "id": "p2-c3-suffer",
-              "number": "II",
-              "title": "To them that suffer for Righteousness' Sake",
+              "number": "2",
+              "title": "To them that suffer for righteousness' sake",
               "sourcePage": 221,
               "verses": [
                 {
@@ -16668,8 +16668,8 @@
             },
             {
               "id": "p2-c3-patience",
-              "number": "III",
-              "title": "Patience and Submission",
+              "number": "3",
+              "title": "Patience and submission",
               "sourcePage": 223,
               "verses": [
                 {
@@ -16766,7 +16766,7 @@
             },
             {
               "id": "p2-c3-perseverance",
-              "number": "IV",
+              "number": "4",
               "title": "Perseverance",
               "sourcePage": 225,
               "verses": [
@@ -17018,8 +17018,8 @@
           "themes": [
             {
               "id": "apx-enlargement",
-              "number": "I",
-              "title": "Of the Enlargement of the Church, and Spreading the Gospel",
+              "number": "1",
+              "title": "Of the enlargement of the Church, and spreading the Gospel",
               "sourcePage": 229,
               "verses": [
                 {
@@ -17506,8 +17506,8 @@
             },
             {
               "id": "apx-glory",
-              "number": "II",
-              "title": "The Glory of the Church",
+              "number": "2",
+              "title": "The glory of the Church",
               "sourcePage": 240,
               "verses": [
                 {
@@ -17714,8 +17714,8 @@
             },
             {
               "id": "apx-light",
-              "number": "III",
-              "title": "Increase of Light and Means of Grace",
+              "number": "3",
+              "title": "Increase of light and means of grace",
               "sourcePage": 243,
               "verses": [
                 {
@@ -17772,8 +17772,8 @@
             },
             {
               "id": "apx-purity",
-              "number": "IV",
-              "title": "Increase of Purity, Holiness, and Righteousness",
+              "number": "4",
+              "title": "Increase of purity, holiness, and righteousness",
               "sourcePage": 244,
               "verses": [
                 {
@@ -17920,8 +17920,8 @@
             },
             {
               "id": "apx-peace",
-              "number": "V",
-              "title": "Peace, Love, and Unity in the Church",
+              "number": "5",
+              "title": "Peace, love, and unity in the Church",
               "sourcePage": 247,
               "verses": [
                 {
@@ -17998,8 +17998,8 @@
             },
             {
               "id": "apx-enemies",
-              "number": "VI",
-              "title": "Submission and Destruction of the Enemies of the Church",
+              "number": "6",
+              "title": "Submission and destruction of the enemies of the Church",
               "sourcePage": 249,
               "verses": [
                 {
@@ -18166,8 +18166,8 @@
             },
             {
               "id": "apx-kings",
-              "number": "VII",
-              "title": "Favour and Submission of Kings to the Kingdom of Christ",
+              "number": "7",
+              "title": "Favour and submission of kings to the kingdom of Christ",
               "sourcePage": 252,
               "verses": [
                 {
@@ -18254,8 +18254,8 @@
             },
             {
               "id": "apx-security",
-              "number": "VIII",
-              "title": "Security, Tranquillity, and Prosperity of the Church",
+              "number": "8",
+              "title": "Security, tranquillity, and prosperity of the Church",
               "sourcePage": 254,
               "verses": [
                 {
@@ -18422,8 +18422,8 @@
             },
             {
               "id": "apx-perpetual",
-              "number": "IX",
-              "title": "The Perpetual Continuance of the Church",
+              "number": "9",
+              "title": "The perpetual continuance of the Church",
               "sourcePage": 257,
               "verses": [
                 {
@@ -18460,8 +18460,8 @@
             },
             {
               "id": "apx-jews",
-              "number": "X",
-              "title": "The Conversion and Restoration of the Jews",
+              "number": "10",
+              "title": "The conversion and restoration of the Jews",
               "sourcePage": 258,
               "verses": [
                 {
@@ -18999,7 +18999,7 @@
             {
               "id": "apx-conclusion",
               "number": null,
-              "title": "That God will perform all his Promises",
+              "title": "That God will perform all his promises",
               "sourcePage": 270,
               "verses": [
                 {

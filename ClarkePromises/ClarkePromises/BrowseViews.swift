@@ -86,29 +86,40 @@ private struct TOCChapterSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Button {
-                if collapsed {
-                    collapsedChapters.remove(chapter.id)
-                } else {
-                    collapsedChapters.insert(chapter.id)
-                }
-            } label: {
-                Text(chapter.title)
-                    .font(AppAppearance.displaySerif(28))
+            VStack(spacing: 4) {
+                Text("Chapter \(chapter.number)")
+                    .font(AppAppearance.displaySerif(17))
                     .foregroundStyle(AppAppearance.ink)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 6)
+                    .accessibilityAddTraits(.isHeader)
+
+                Button {
+                    if collapsed {
+                        collapsedChapters.remove(chapter.id)
+                    } else {
+                        collapsedChapters.insert(chapter.id)
+                    }
+                } label: {
+                    Text(chapter.title)
+                        .font(AppAppearance.displaySerif(28))
+                        .foregroundStyle(AppAppearance.ink)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 4)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Chapter \(chapter.number), \(chapter.title)")
+                .accessibilityHint(collapsed ? "Expands this chapter" : "Collapses this chapter")
             }
-            .buttonStyle(.plain)
-            .accessibilityHint(collapsed ? "Expands this chapter" : "Collapses this chapter")
 
             if !collapsed {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 10) {
                     ForEach(chapter.themes) { theme in
                         TOCThemeNode(theme: theme, indent: 0)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
@@ -119,15 +130,21 @@ private struct TOCThemeNode: View {
     let indent: Int
     @Environment(CatalogStore.self) private var catalog
 
+    private let numberColumn: CGFloat = 32
+    private let titleGutter: CGFloat = 8
+    private let childIndent: CGFloat = 18
+
+    private var isSubtheme: Bool { indent > 0 }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 10) {
             NavigationLink(value: catalog.route(for: theme)) {
-                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                HStack(alignment: .firstTextBaseline, spacing: titleGutter) {
                     if let number = theme.number {
                         Text(number + ".")
                             .font(AppAppearance.displaySerif(19))
                             .foregroundStyle(AppAppearance.ink)
-                            .frame(width: 44, alignment: .trailing)
+                            .frame(width: numberColumn, alignment: .trailing)
                         Text(theme.title)
                             .font(AppAppearance.displaySerif(19))
                             .foregroundStyle(AppAppearance.ink)
@@ -135,14 +152,15 @@ private struct TOCThemeNode: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     } else {
                         Text(theme.title)
-                            .font(AppAppearance.displaySerif(17))
-                            .foregroundStyle(AppAppearance.ink.opacity(0.88))
+                            .font(AppAppearance.displaySerif(isSubtheme ? 16 : 19))
+                            .foregroundStyle(AppAppearance.ink.opacity(isSubtheme ? 0.58 : 1))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, CGFloat(44 + indent * 20))
+                            .padding(.leading, numberColumn + titleGutter + CGFloat(indent) * childIndent)
                     }
                 }
-                .padding(.vertical, 4)
+                .padding(.vertical, 3)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
@@ -152,6 +170,7 @@ private struct TOCThemeNode: View {
                 AnyView(TOCThemeNode(theme: child, indent: indent + 1))
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
