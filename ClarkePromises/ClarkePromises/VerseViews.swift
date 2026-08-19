@@ -10,7 +10,7 @@ struct ReaderVerseBlock: View {
             (Text(verseNumber)
                 .font(AppAppearance.uiSans(9))
                 .baselineOffset(7)
-                .foregroundColor(AppAppearance.apparatus)
+                .foregroundColor(AppAppearance.inkSecondary)
             + Text("\u{00A0}" + verse.kjv)
                 .font(AppAppearance.readerSerif(17))
                 .foregroundColor(AppAppearance.ink))
@@ -20,7 +20,7 @@ struct ReaderVerseBlock: View {
             HStack(alignment: .firstTextBaseline, spacing: 12) {
                 Text(verse.displayRef)
                     .font(AppAppearance.uiSans(10))
-                    .foregroundStyle(AppAppearance.apparatus)
+                    .foregroundStyle(AppAppearance.inkSecondary)
                 Spacer(minLength: 8)
                 FavoriteStarButton(verse: verse)
                 Link("Open in ESV", destination: ESVLink.esvOrgURL(for: verse))
@@ -32,7 +32,7 @@ struct ReaderVerseBlock: View {
         .padding(.horizontal, emphasized ? 8 : 0)
         .background {
             if emphasized {
-                AppAppearance.accent.opacity(0.07)
+                AppAppearance.highlight
                     .padding(.horizontal, -8)
             }
         }
@@ -53,14 +53,14 @@ struct SearchHitRow: View {
         VStack(alignment: .leading, spacing: 6) {
             Text(hit.theme.title)
                 .font(AppAppearance.uiSans(12, weight: .medium))
-                .foregroundStyle(AppAppearance.sectionLabel)
+                .foregroundStyle(AppAppearance.inkSecondary)
             Text(hit.verse.kjv)
                 .font(AppAppearance.readerSerif(16))
                 .foregroundStyle(AppAppearance.ink)
                 .lineLimit(3)
             Text(hit.verse.displayRef)
                 .font(AppAppearance.uiSans(11))
-                .foregroundStyle(AppAppearance.apparatus)
+                .foregroundStyle(AppAppearance.inkSecondary)
         }
         .padding(.vertical, 4)
     }
@@ -83,7 +83,7 @@ struct FavoriteStarButton: View {
         } label: {
             Image(systemName: isFavorite ? "star.fill" : "star")
                 .font(AppAppearance.uiSans(12))
-                .foregroundStyle(isFavorite ? AppAppearance.accent : AppAppearance.apparatus)
+                .foregroundStyle(isFavorite ? AppAppearance.accent : AppAppearance.inkSecondary)
                 .accessibilityLabel(isFavorite ? "Remove favorite" : "Add favorite")
         }
         .buttonStyle(.plain)

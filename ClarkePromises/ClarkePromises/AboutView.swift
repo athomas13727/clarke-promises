@@ -11,7 +11,7 @@ struct AboutView: View {
                     .font(AppAppearance.displaySerif(18))
                 Text(catalog.meta.edition)
             }
-            .listRowBackground(AppAppearance.parchment)
+            .listRowBackground(AppAppearance.parchmentElevated)
 
             Section("This free app") {
                 LabeledContent("Price") { Text("Free") }
@@ -20,25 +20,25 @@ struct AboutView: View {
                 LabeledContent("Accounts") { Text("None") }
                 Text("Favorites stay on this device (SwiftData). There is no sign-in and no network use except when you choose Open in ESV.")
             }
-            .listRowBackground(AppAppearance.parchment)
+            .listRowBackground(AppAppearance.parchmentElevated)
 
             Section("Texts and copyright") {
                 Text("In-app Bible wording is the public-domain King James Version only.")
                 Text(catalog.meta.kjvSource)
                     .font(.footnote)
-                    .foregroundStyle(AppAppearance.apparatus)
+                    .foregroundStyle(AppAppearance.inkSecondary)
                 Text("Clark's heads and the verse references were transcribed from the public-domain 1895 Internet Archive edition:")
                 Link(catalog.meta.source, destination: URL(string: catalog.meta.source)!)
                 Text("The English Standard Version is © Crossway. This app does not bundle, cache, or store ESV, NASB, NIV, or NET text. “Open in ESV” hands the reference to Safari or another Bible app.")
             }
-            .listRowBackground(AppAppearance.parchment)
+            .listRowBackground(AppAppearance.parchmentElevated)
 
             Section("What is not included") {
                 ForEach(catalog.meta.excluded, id: \.self) { line in
                     Text(line)
                 }
             }
-            .listRowBackground(AppAppearance.parchment)
+            .listRowBackground(AppAppearance.parchmentElevated)
 
             Section("Corpus") {
                 Text(catalog.meta.structure)
@@ -47,9 +47,9 @@ struct AboutView: View {
                 Text("Heads follow the original two parts plus appendix, including Clark's nested sub-heads. The modern four-part website split is not used.")
                 Text("References were recovered from the 1895 scan (EPUB/OCR) and looked up in a public-domain KJV. A few OCR readings may still need proofing; see docs/CORPUS.md.")
                     .font(.footnote)
-                    .foregroundStyle(AppAppearance.apparatus)
+                    .foregroundStyle(AppAppearance.inkSecondary)
             }
-            .listRowBackground(AppAppearance.parchment)
+            .listRowBackground(AppAppearance.parchmentElevated)
         }
         .scrollContentBackground(.hidden)
         .readerChrome()

@@ -24,7 +24,7 @@ struct RootTabView: View {
                 Label("Favorites", systemImage: "star")
             }
         }
-        .toolbarBackground(AppAppearance.parchment, for: .tabBar)
+        .toolbarBackground(AppAppearance.tabBar, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)
     }
 }

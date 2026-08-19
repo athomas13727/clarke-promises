@@ -21,8 +21,8 @@ struct SearchView: View {
                     NavigationLink(value: route(for: hit)) {
                         SearchHitRow(hit: hit)
                     }
-                    .listRowBackground(AppAppearance.parchment)
-                    .listRowSeparatorTint(AppAppearance.apparatus.opacity(0.35))
+                    .listRowBackground(AppAppearance.parchmentElevated)
+                    .listRowSeparatorTint(AppAppearance.hairline)
                 }
             }
         }

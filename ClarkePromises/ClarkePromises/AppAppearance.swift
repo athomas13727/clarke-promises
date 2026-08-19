@@ -2,43 +2,16 @@ import SwiftUI
 import UIKit
 
 enum AppAppearance {
-    /// Burgundy is the only accent in both appearances.
-    static let accent = adaptive(
-        light: UIColor(red: 0.45, green: 0.18, blue: 0.20, alpha: 1),
-        dark: UIColor(red: 0.64, green: 0.30, blue: 0.34, alpha: 1)
-    )
-
-    /// Page / chrome. Light parchment; dark warm charcoal, not iOS gray.
-    static let parchment = adaptive(
-        light: UIColor(red: 0.96, green: 0.94, blue: 0.89, alpha: 1),
-        dark: UIColor(red: 0.11, green: 0.09, blue: 0.07, alpha: 1)
-    )
-
-    /// Body type. Light ink; dark dim cream.
-    static let ink = adaptive(
-        light: .black,
-        dark: UIColor(red: 0.88, green: 0.84, blue: 0.74, alpha: 1)
-    )
-
-    static let locationPill = adaptive(
-        light: UIColor(red: 0.14, green: 0.12, blue: 0.11, alpha: 1),
-        dark: UIColor(red: 0.22, green: 0.18, blue: 0.14, alpha: 1)
-    )
-
-    static let locationPillText = adaptive(
-        light: UIColor(red: 0.96, green: 0.94, blue: 0.89, alpha: 1),
-        dark: UIColor(red: 0.88, green: 0.84, blue: 0.74, alpha: 1)
-    )
-
-    static let apparatus = adaptive(
-        light: UIColor(red: 0.55, green: 0.52, blue: 0.49, alpha: 1),
-        dark: UIColor(red: 0.64, green: 0.58, blue: 0.50, alpha: 1)
-    )
-
-    static let sectionLabel = adaptive(
-        light: UIColor(red: 0.46, green: 0.44, blue: 0.41, alpha: 1),
-        dark: UIColor(red: 0.70, green: 0.64, blue: 0.54, alpha: 1)
-    )
+    static let parchment = adaptive(light: 0xF4EFE6, dark: 0x1A1612)
+    static let parchmentElevated = adaptive(light: 0xFAF7F0, dark: 0x262019)
+    static let ink = adaptive(light: 0x1A1512, dark: 0xEDE6DA)
+    static let inkSecondary = adaptive(light: 0x6F675E, dark: 0xA89F91)
+    static let accent = adaptive(light: 0x732E33, dark: 0xC4787A)
+    static let hairline = adaptive(light: 0xE4DDD2, dark: 0x3A322C)
+    static let tabBar = adaptive(light: 0xF4EFE6, dark: 0x1A1612)
+    static let locationPillFill = adaptive(light: 0x1A1512, dark: 0xEDE6DA)
+    static let locationPillText = adaptive(light: 0xF4EFE6, dark: 0x1A1612)
+    static let highlight = adaptive(light: 0xF0E2C8, dark: 0x4A3A28)
 
     static func displaySerif(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
         .system(size: size, weight: weight, design: .serif)
@@ -52,9 +25,18 @@ enum AppAppearance {
         .system(size: size, weight: weight, design: .default)
     }
 
-    private static func adaptive(light: UIColor, dark: UIColor) -> Color {
+    private static func hex(_ value: UInt32) -> UIColor {
+        UIColor(
+            red: CGFloat((value >> 16) & 0xFF) / 255,
+            green: CGFloat((value >> 8) & 0xFF) / 255,
+            blue: CGFloat(value & 0xFF) / 255,
+            alpha: 1
+        )
+    }
+
+    private static func adaptive(light: UInt32, dark: UInt32) -> Color {
         Color(uiColor: UIColor { traits in
-            traits.userInterfaceStyle == .dark ? dark : light
+            traits.userInterfaceStyle == .dark ? hex(dark) : hex(light)
         })
     }
 }

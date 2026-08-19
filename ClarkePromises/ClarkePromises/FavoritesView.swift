@@ -30,13 +30,13 @@ struct FavoritesView: View {
                                 )
                             )
                         }
-                        .listRowBackground(AppAppearance.parchment)
-                        .listRowSeparatorTint(AppAppearance.apparatus.opacity(0.35))
+                        .listRowBackground(AppAppearance.parchmentElevated)
+                        .listRowSeparatorTint(AppAppearance.hairline)
                     } else {
                         Text(favorite.displayRef)
                             .font(AppAppearance.uiSans(13))
-                            .foregroundStyle(AppAppearance.apparatus)
-                            .listRowBackground(AppAppearance.parchment)
+                            .foregroundStyle(AppAppearance.inkSecondary)
+                            .listRowBackground(AppAppearance.parchmentElevated)
                     }
                 }
             }

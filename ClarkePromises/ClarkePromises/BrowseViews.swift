@@ -2,24 +2,28 @@ import SwiftUI
 
 struct BrowseView: View {
     @Environment(CatalogStore.self) private var catalog
-    @State private var collapsedChapters: Set<String> = []
+    @State private var expandedChapterID = "p1-c1"
     @State private var showingAbout = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 48) {
                 ForEach(catalog.parts) { part in
-                    TOCPartSection(part: part, collapsedChapters: $collapsedChapters)
+                    TOCPartSection(part: part, expandedChapterID: $expandedChapterID)
                 }
 
-                Button("About") {
+                Button {
                     showingAbout = true
+                } label: {
+                    Text("About this book")
+                        .font(AppAppearance.displaySerif(15))
+                        .foregroundStyle(AppAppearance.inkSecondary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
                 }
-                .font(AppAppearance.uiSans(13))
-                .foregroundStyle(AppAppearance.accent)
-                .frame(maxWidth: .infinity)
+                .buttonStyle(.plain)
                 .padding(.top, 8)
-                .accessibilityLabel("About this app")
+                .accessibilityLabel("About this book")
             }
             .padding(.horizontal, 36)
             .padding(.top, 20)
@@ -50,18 +54,18 @@ struct BrowseView: View {
 /// Named views (not `some View` helpers) so nested TOC rows do not form an opaque-type cycle.
 private struct TOCPartSection: View {
     let part: CatalogPart
-    @Binding var collapsedChapters: Set<String>
+    @Binding var expandedChapterID: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: 28) {
             Text(partLabel)
                 .font(AppAppearance.uiSans(11, weight: .semibold))
                 .tracking(2.4)
-                .foregroundStyle(AppAppearance.sectionLabel)
+                .foregroundStyle(AppAppearance.inkSecondary)
                 .frame(maxWidth: .infinity)
 
             ForEach(part.chapters) { chapter in
-                TOCChapterSection(chapter: chapter, collapsedChapters: $collapsedChapters)
+                TOCChapterSection(chapter: chapter, expandedChapterID: $expandedChapterID)
             }
         }
     }
@@ -77,10 +81,10 @@ private struct TOCPartSection: View {
 
 private struct TOCChapterSection: View {
     let chapter: CatalogChapter
-    @Binding var collapsedChapters: Set<String>
+    @Binding var expandedChapterID: String
 
-    private var collapsed: Bool {
-        collapsedChapters.contains(chapter.id)
+    private var expanded: Bool {
+        expandedChapterID == chapter.id
     }
 
     var body: some View {
@@ -94,10 +98,8 @@ private struct TOCChapterSection: View {
                     .accessibilityAddTraits(.isHeader)
 
                 Button {
-                    if collapsed {
-                        collapsedChapters.remove(chapter.id)
-                    } else {
-                        collapsedChapters.insert(chapter.id)
+                    if !expanded {
+                        expandedChapterID = chapter.id
                     }
                 } label: {
                     Text(chapter.title)
@@ -109,10 +111,10 @@ private struct TOCChapterSection: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Chapter \(chapter.number), \(chapter.title)")
-                .accessibilityHint(collapsed ? "Expands this chapter" : "Collapses this chapter")
+                .accessibilityHint(expanded ? "This chapter is open" : "Expands this chapter and closes the open chapter")
             }
 
-            if !collapsed {
+            if expanded {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(chapter.themes) { theme in
                         TOCThemeNode(theme: theme, indent: 0)
@@ -152,7 +154,7 @@ private struct TOCThemeNode: View {
                     } else {
                         Text(theme.title)
                             .font(AppAppearance.displaySerif(isSubtheme ? 16 : 19))
-                            .foregroundStyle(AppAppearance.ink.opacity(isSubtheme ? 0.58 : 1))
+                            .foregroundStyle(isSubtheme ? AppAppearance.inkSecondary : AppAppearance.ink)
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, numberColumn + titleGutter + CGFloat(indent) * childIndent)
@@ -234,7 +236,7 @@ private struct ThemeReader: View {
                         .minimumScaleFactor(0.75)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
-                        .background(AppAppearance.locationPill, in: Capsule())
+                        .background(AppAppearance.locationPillFill, in: Capsule())
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Back to contents, \(catalog.locationLabel(for: theme))")
@@ -261,7 +263,7 @@ private struct ThemeReader: View {
             Text(child.title.uppercased())
                 .font(AppAppearance.uiSans(11, weight: .medium))
                 .tracking(1.6)
-                .foregroundStyle(AppAppearance.sectionLabel)
+                .foregroundStyle(AppAppearance.inkSecondary)
                 .padding(.top, 20)
                 .padding(.bottom, 8)
                 .id(child.id)
@@ -273,7 +275,7 @@ private struct ThemeReader: View {
             ForEach(child.children) { grand in
                 Text(grand.title)
                     .font(AppAppearance.uiSans(11, weight: .regular))
-                    .foregroundStyle(AppAppearance.sectionLabel)
+                    .foregroundStyle(AppAppearance.inkSecondary)
                     .padding(.top, 12)
                     .padding(.bottom, 6)
                     .padding(.leading, 20)
