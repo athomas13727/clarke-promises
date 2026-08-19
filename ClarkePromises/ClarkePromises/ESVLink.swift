@@ -43,24 +43,29 @@ enum ESVLink {
         }
     }
 
-    /// Bible Gateway passage page. Search is Clark's reference — no translation text.
+    /// Clark's citation with spaces as `+`, same encoding for every publisher.
+    static func encodedRef(_ reference: String) -> String {
+        reference
+            .replacingOccurrences(of: "–", with: "-")
+            .replacingOccurrences(of: "—", with: "-")
+            .replacingOccurrences(of: " ", with: "+")
+    }
+
+    /// Outbound verse page. Never fetches or stores translation wording.
     static func bibleGatewayURL(for verse: CatalogVerse, version: BibleGatewayVersion) -> URL {
         bibleGatewayURL(reference: verse.displayRef, version: version)
     }
 
     static func bibleGatewayURL(reference: String, version: BibleGatewayVersion) -> URL {
-        let search = reference
-            .replacingOccurrences(of: "–", with: "-")
-            .replacingOccurrences(of: "—", with: "-")
-        var comps = URLComponents()
-        comps.scheme = "https"
-        comps.host = "www.biblegateway.com"
-        comps.path = "/passage/"
-        comps.queryItems = [
-            URLQueryItem(name: "search", value: search),
-            URLQueryItem(name: "version", value: version.rawValue),
-        ]
-        return comps.url!
+        let ref = encodedRef(reference)
+        switch version {
+        case .esv:
+            return URL(string: "https://www.esv.org/verses/\(ref)/")!
+        case .niv:
+            return URL(string: "https://www.biblica.com/bible/?osis=niv:\(ref)")!
+        case .nasb:
+            return URL(string: "https://www.biblegateway.com/passage/?search=\(ref)&version=NASB")!
+        }
     }
 
     static func youVersionCode(_ book: String) -> String {

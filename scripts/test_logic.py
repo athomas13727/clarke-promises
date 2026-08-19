@@ -39,10 +39,19 @@ def bible_com_url(book: str, chapter: int, verse: int) -> str:
     return f"https://www.bible.com/bible/59/{code}.{chapter}.{verse}"
 
 
-def bible_gateway_url(reference: str, version: str) -> str:
-    search = reference.replace("–", "-").replace("—", "-")
-    encoded = quote(search, safe=":")
-    return f"https://www.biblegateway.com/passage/?search={encoded}&version={version}"
+def encoded_ref(reference: str) -> str:
+    return reference.replace("–", "-").replace("—", "-").replace(" ", "+")
+
+
+def handoff_url(reference: str, version: str) -> str:
+    ref = encoded_ref(reference)
+    if version == "ESV":
+        return f"https://www.esv.org/verses/{ref}/"
+    if version == "NIV":
+        return f"https://www.biblica.com/bible/?osis=niv:{ref}"
+    if version == "NASB":
+        return f"https://www.biblegateway.com/passage/?search={ref}&version=NASB"
+    raise AssertionError(f"unexpected version {version!r}")
 
 
 def walk(nodes):
@@ -80,17 +89,18 @@ def main() -> int:
     assert esv_org_url("1 Peter", 2, 4, 5) == "https://www.esv.org/1+Peter+2:4-5/"
     assert bible_com_url("John", 3, 16) == "https://www.bible.com/bible/59/JHN.3.16"
     assert bible_com_url("Ephesians", 2, 18) == "https://www.bible.com/bible/59/EPH.2.18"
+    assert encoded_ref("Psalm 37:3") == "Psalm+37:3"
     assert (
-        bible_gateway_url("Psalm 37:3", "ESV")
-        == "https://www.biblegateway.com/passage/?search=Psalm%2037:3&version=ESV"
+        handoff_url("Psalm 37:3", "ESV")
+        == "https://www.esv.org/verses/Psalm+37:3/"
     )
     assert (
-        bible_gateway_url("Psalm 23:1–6", "NASB")
-        == "https://www.biblegateway.com/passage/?search=Psalm%2023:1-6&version=NASB"
+        handoff_url("Psalm 23:1–6", "NASB")
+        == "https://www.biblegateway.com/passage/?search=Psalm+23:1-6&version=NASB"
     )
     assert (
-        bible_gateway_url("1 Peter 2:4-5", "NIV")
-        == "https://www.biblegateway.com/passage/?search=1%20Peter%202:4-5&version=NIV"
+        handoff_url("1 Peter 2:4-5", "NIV")
+        == "https://www.biblica.com/bible/?osis=niv:1+Peter+2:4-5"
     )
 
     titles = {}
