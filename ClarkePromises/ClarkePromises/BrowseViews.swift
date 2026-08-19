@@ -198,10 +198,12 @@ private struct ThemeReader: View {
     let theme: CatalogTheme
     let route: ThemeRoute
     @Environment(CatalogStore.self) private var catalog
+    @Environment(\.dismiss) private var dismiss
 
     @ScaledMetric(relativeTo: .caption2) private var chapterSize: CGFloat = 11
     @ScaledMetric(relativeTo: .title2) private var titleSize: CGFloat = 22
-    @ScaledMetric(relativeTo: .caption) private var subheadSize: CGFloat = 12
+    /// Scale with body, not caption — caption-relative serif was resolving as SF.
+    @ScaledMetric(relativeTo: .body) private var subheadSize: CGFloat = 12
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -234,9 +236,26 @@ private struct ThemeReader: View {
             }
         }
         .readerChrome()
+        .toolbarBackground(.hidden, for: .navigationBar)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(AppAppearance.uiSans(17, weight: .semibold))
+                        .foregroundStyle(AppAppearance.ink)
+                        .frame(minWidth: 44, minHeight: 44, alignment: .leading)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Back")
+            }
+        }
     }
 
     @ViewBuilder
@@ -288,11 +307,18 @@ private struct ThemeReader: View {
     }
 
     private func subhead(_ title: String) -> some View {
-        Text(title.uppercased())
-            .font(AppAppearance.displaySerif(subheadSize, weight: .semibold))
-            .tracking(1)
-            .foregroundStyle(AppAppearance.inkSecondary)
+        // AttributedString + UIFont New York avoids SwiftUI `.tracking` / caption
+        // `Font.system(design: .serif)` falling back to SF at 12pt.
+        Text(serifSubheadText(title.uppercased()))
             .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func serifSubheadText(_ title: String) -> AttributedString {
+        var attributes = AttributeContainer()
+        attributes.font = AppAppearance.newYork(subheadSize, weight: .semibold)
+        attributes.kern = 1
+        attributes.foregroundColor = AppAppearance.inkSecondary
+        return AttributedString(title, attributes: attributes)
     }
 
     private func verseStack(_ verses: [CatalogVerse]) -> some View {
