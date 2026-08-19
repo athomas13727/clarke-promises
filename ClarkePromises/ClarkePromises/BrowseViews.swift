@@ -198,7 +198,6 @@ private struct ThemeReader: View {
     let theme: CatalogTheme
     let route: ThemeRoute
     @Environment(CatalogStore.self) private var catalog
-    @Environment(\.dismiss) private var dismiss
 
     @ScaledMetric(relativeTo: .caption2) private var chapterSize: CGFloat = 11
     @ScaledMetric(relativeTo: .title2) private var titleSize: CGFloat = 22
@@ -236,26 +235,10 @@ private struct ThemeReader: View {
             }
         }
         .readerChrome()
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .background(FlattenSystemBackChrome())
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .font(AppAppearance.uiSans(17, weight: .semibold))
-                        .foregroundStyle(AppAppearance.ink)
-                        .frame(minWidth: 44, minHeight: 44, alignment: .leading)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Back")
-            }
-        }
     }
 
     @ViewBuilder

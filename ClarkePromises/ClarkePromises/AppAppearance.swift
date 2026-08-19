@@ -92,3 +92,67 @@ extension View {
             .toolbarBackground(.visible, for: .navigationBar)
     }
 }
+
+/// Clears bar-button chrome on the *system* back control. Does not replace it.
+/// iOS 26 still draws liquid glass on `backBarButtonItem`; `hidesSharedBackground`
+/// and `backButtonAppearance` do not strip that platter (Apple ignores them).
+struct FlattenSystemBackChrome: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        Controller()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        (uiViewController as? Controller)?.apply()
+    }
+
+    final class Controller: UIViewController {
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            apply()
+        }
+
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            apply()
+        }
+
+        func apply() {
+            guard let nav = navigationController else { return }
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithTransparentBackground()
+            appearance.backgroundColor = .clear
+            appearance.shadowColor = .clear
+            appearance.shadowImage = UIImage()
+
+            let plain = UIBarButtonItemAppearance(style: .plain)
+            plain.normal.backgroundImage = UIImage()
+            plain.normal.titlePositionAdjustment = .zero
+            appearance.buttonAppearance = plain
+            appearance.backButtonAppearance = plain
+            appearance.doneButtonAppearance = plain
+
+            nav.navigationBar.standardAppearance = appearance
+            nav.navigationBar.scrollEdgeAppearance = appearance
+            nav.navigationBar.compactAppearance = appearance
+            nav.navigationBar.compactScrollEdgeAppearance = appearance
+            nav.navigationBar.isTranslucent = true
+
+            stripSharedBackground(nav.navigationItem.backBarButtonItem)
+            stripSharedBackground(nav.navigationBar.topItem?.backBarButtonItem)
+            stripSharedBackground(nav.navigationBar.backItem?.backBarButtonItem)
+            if let items = nav.navigationBar.items {
+                for item in items {
+                    stripSharedBackground(item.backBarButtonItem)
+                }
+            }
+        }
+
+        private func stripSharedBackground(_ item: UIBarButtonItem?) {
+            guard let item else { return }
+            // Compile-safe on older SDKs; iOS 26 still ignores this on system back.
+            if item.responds(to: Selector(("setHidesSharedBackground:"))) {
+                item.setValue(true, forKey: "hidesSharedBackground")
+            }
+        }
+    }
+}
