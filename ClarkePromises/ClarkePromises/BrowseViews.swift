@@ -4,12 +4,17 @@ struct BrowseView: View {
     @Environment(CatalogStore.self) private var catalog
     @State private var expandedChapterID = "p1-c1"
     @State private var showingAbout = false
+    @State private var presentedTheme: ThemeRoute?
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 48) {
                 ForEach(catalog.parts) { part in
-                    TOCPartSection(part: part, expandedChapterID: $expandedChapterID)
+                    TOCPartSection(
+                        part: part,
+                        expandedChapterID: $expandedChapterID,
+                        presentedTheme: $presentedTheme
+                    )
                 }
 
                 Button {
@@ -44,7 +49,7 @@ struct BrowseView: View {
             .tint(AppAppearance.accent)
             .presentationBackground(AppAppearance.parchment)
         }
-        .navigationDestination(for: ThemeRoute.self) { route in
+        .navigationDestination(item: $presentedTheme) { route in
             ThemePageView(route: route)
         }
     }
@@ -55,6 +60,7 @@ struct BrowseView: View {
 private struct TOCPartSection: View {
     let part: CatalogPart
     @Binding var expandedChapterID: String
+    @Binding var presentedTheme: ThemeRoute?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 28) {
@@ -65,7 +71,11 @@ private struct TOCPartSection: View {
                 .frame(maxWidth: .infinity)
 
             ForEach(part.chapters) { chapter in
-                TOCChapterSection(chapter: chapter, expandedChapterID: $expandedChapterID)
+                TOCChapterSection(
+                    chapter: chapter,
+                    expandedChapterID: $expandedChapterID,
+                    presentedTheme: $presentedTheme
+                )
             }
         }
     }
@@ -82,6 +92,7 @@ private struct TOCPartSection: View {
 private struct TOCChapterSection: View {
     let chapter: CatalogChapter
     @Binding var expandedChapterID: String
+    @Binding var presentedTheme: ThemeRoute?
 
     private var expanded: Bool {
         expandedChapterID == chapter.id
@@ -117,7 +128,7 @@ private struct TOCChapterSection: View {
             if expanded {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(chapter.themes) { theme in
-                        TOCThemeNode(theme: theme, indent: 0)
+                        TOCThemeNode(theme: theme, indent: 0, presentedTheme: $presentedTheme)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -129,6 +140,7 @@ private struct TOCChapterSection: View {
 private struct TOCThemeNode: View {
     let theme: CatalogTheme
     let indent: Int
+    @Binding var presentedTheme: ThemeRoute?
     @Environment(CatalogStore.self) private var catalog
 
     private let numberColumn: CGFloat = 32
@@ -139,7 +151,9 @@ private struct TOCThemeNode: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NavigationLink(value: catalog.route(for: theme)) {
+            Button {
+                presentedTheme = catalog.route(for: theme)
+            } label: {
                 HStack(alignment: .firstTextBaseline, spacing: titleGutter) {
                     if let number = theme.number {
                         Text(number + ".")
@@ -169,7 +183,7 @@ private struct TOCThemeNode: View {
 
             ForEach(theme.children) { child in
                 // AnyView breaks the `some View` cycle at the only recursive TOC edge.
-                AnyView(TOCThemeNode(theme: child, indent: indent + 1))
+                AnyView(TOCThemeNode(theme: child, indent: indent + 1, presentedTheme: $presentedTheme))
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -185,6 +199,7 @@ private struct TOCPressStyle: ButtonStyle {
                     .padding(.horizontal, -14)
                     .opacity(configuration.isPressed ? 1 : 0)
             }
+            .animation(nil, value: configuration.isPressed)
     }
 }
 
