@@ -1,0 +1,3 @@
+/* Home-screen label. Keep the space so SpringBoard can wrap to two lines. */
+"CFBundleDisplayName" = "Precious Promises";
+"CFBundleName" = "Precious Promises";
