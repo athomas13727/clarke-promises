@@ -89,11 +89,20 @@ To finish it:
 6. Do not paste ESV/NASB/NIV/NET wording into the JSON. Look the verse up
    in the KJV dataset only.
 
-Known OCR gaps: running headers sometimes leak a verse into the next head
-(e.g. Food); `Matt, vi, 25` style commas drop refs unless curated (Raiment);
-Preservation and Old Age needed a short curated list because those pages
-are badly broken; grandchildren on a shared page (Pardon’s “heinous / all
-/ backslidings”) still share most of the same refs.
+Proofed leftovers (see `theme_tree.py` curated / exclude lists):
+
+- Food no longer inherits Philippians 4:19 from the “Promises of Food”
+  running header; that verse stays under Temporal blessings in general.
+- `Is. Ixv. 13` is Isaiah 65:13, not Isaiah 14:13 / 14:30–32.
+- Comma refs (`Matt, vi, 25`, `Ps. cxii, 7`) parse; Raiment keeps those
+  Matthew 6 verses.
+- Long life / Health are split on the 1895 “Health” inset, not the
+  running header. Safety starts at “V. Promises of Safety” so Health’s
+  Proverbs 4:22 does not leak. `Ps. cxvi. 8` in that head is Psalm 16:8.
+
+Preservation and Old Age still use a short curated list because those
+pages are badly broken; grandchildren on a shared page (Pardon’s
+“heinous / all / backslidings”) still share most of the same refs.
 
 Watts's recommendation and Clark's introduction are intentionally omitted
 from the app so it remains a promise reader.

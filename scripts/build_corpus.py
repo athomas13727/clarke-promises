@@ -381,11 +381,12 @@ def ocr_chapter_candidates(raw: str) -> list[int]:
     if re.fullmatch(r"\d{1,3}", collapsed):
         add(int(collapsed))
 
-    # Ixxxiv / Iviii / Ixv often mean lxxxiv / lviii / lxv
+    # Ixxxiv / Iviii / Ixv are almost always lxxxiv / lviii / lxv (OCR I for l).
+    # Prefer the l-reading first so Is. Ixv. 13 is Isaiah 65:13, not 14:13.
     roman = collapsed.lower().replace("j", "i")
-    add(roman_to_int(roman))
     if roman.startswith("i") and len(roman) >= 3 and roman[1] in "xvl":
         add(roman_to_int("l" + roman[1:]))
+    add(roman_to_int(roman))
     if roman.startswith("x") and "u" not in roman:
         # x^v'm style garbage is ignored by roman_to_int
         add(roman_to_int(roman.replace("^", "").replace("'", "")))
@@ -401,13 +402,26 @@ def ocr_verse_candidates(raw: str) -> list[int]:
         if n and 1 <= n <= 176 and n not in candidates:
             candidates.append(n)
 
+    # "Ver. 1 3" / "1 2" => 13 / 12
+    spaced = re.sub(r"\s+", "", raw)
+    if re.fullmatch(r"\d{1,3}", spaced):
+        add(int(spaced))
+        return candidates
     if re.fullmatch(r"\d{1,3}", collapsed):
         add(int(collapsed))
         return candidates
-    add(roman_to_int(collapsed.lower()))
-    if collapsed.lower().startswith("i") and len(collapsed) >= 3:
-        add(roman_to_int("l" + collapsed.lower()[1:]))
-    # "1 2" => 12
+    low = collapsed.lower()
+    # II / ll as 11 (Prov. ix. II = 9:11), then roman 2
+    if low in {"ii", "ll", "il", "li"}:
+        add(11)
+    # 1 Pet. iii. v2i = 3:13; Prov. i. 2)2i = 1:33
+    if low in {"v2i", "vzi"}:
+        add(13)
+    if re.sub(r"[^0-9a-z]+", "", low) in {"22i", "2i2", "232"}:
+        add(33)
+    add(roman_to_int(low))
+    if low.startswith("i") and len(low) >= 3:
+        add(roman_to_int("l" + low[1:]))
     digits = re.sub(r"\D", "", raw)
     if digits:
         add(int(digits))
@@ -469,6 +483,8 @@ def slice_text(text: str, start_marker: str | None, end_marker: str | None) -> s
 def normalize_for_refs(text: str) -> str:
     text = text.replace("[ohn", "John").replace("[ohn", "John")
     text = text.replace("fohn", "John").replace("fob", "Job").replace("iob", "Job")
+    text = text.replace("Tivi.", "Tim.").replace("Tivi ", "Tim ")
+    text = re.sub(r"/ \s*Sam\.", "1 Sam.", text)
     text = text.replace("SAIAH", "Isaiah").replace("SAL.", "Psal.")
     text = text.replace("PSAL.", "Psal.").replace("EUT.", "Deut.")
     text = text.replace("Ninnb.", "Numb.").replace("Ro}n.", "Rom.")
@@ -493,10 +509,10 @@ def find_book_at(text: str, index: int) -> tuple[str, int] | None:
 REF_RE = re.compile(
     r"""
     (?P<book>(?:[123]|I{1,3}|i{1,3})\s+)?
-    (?P<name>[A-Za-z\[\]]{2,12})\.
+    (?P<name>[A-Za-z\[\]]{2,12})[.,]
     \s+
     (?P<chap>[ivxlcdmIVXLCDM0-9][ivxlcdmIVXLCDM0-9\s]{0,10})
-    \.
+    [.,]
     \s*
     (?P<verse>[ivxlcdmIVXLCDM0-9][ivxlcdmIVXLCDM0-9\s]{0,6})
     """,
@@ -506,7 +522,7 @@ REF_RE = re.compile(
 VER_RE = re.compile(
     r"""
     \bVer(?:se)?\.?\s*
-    (?P<verse>[ivxlcdmIVXLCDM0-9]{1,6})
+    (?P<verse>[ivxlcdmIVXLCDM0-9][ivxlcdmIVXLCDM0-9\s]{0,6})
     """,
     re.VERBOSE | re.I,
 )
@@ -530,7 +546,7 @@ def parse_refs(text: str, kjv: dict[tuple[str, int, int], str]) -> list[tuple[st
                 if (book, ch, vs) in kjv:
                     accept(book, ch, vs)
                     return True
-        # Psalm OCR: "Ps. 1. 15" is often Ps. l. 15 (50)
+        # Psalm OCR: "Ps. 1. 15" is often Ps. l. 15 (50); cxiv/cxlv swaps
         if book == "Psalms":
             extras = []
             for ch in chapters:
@@ -538,11 +554,21 @@ def parse_refs(text: str, kjv: dict[tuple[str, int, int], str]) -> list[tuple[st
                     extras.append(50)
                 if ch == 114:
                     extras.append(145)
+                if ch == 145:
+                    extras.append(114)
             for ch in extras:
                 for vs in verses:
                     if (book, ch, vs) in kjv:
                         accept(book, ch, vs)
                         return True
+        # Clark/OCR: "Ex. xxxiv. 25/28" is Ezekiel 34 (covenant of peace), not Exodus 34
+        if book == "Exodus":
+            for ch in chapters:
+                if ch == 34:
+                    for vs in verses:
+                        if vs in {25, 28} and ("Ezekiel", ch, vs) in kjv:
+                            accept("Ezekiel", ch, vs)
+                            return True
         return False
 
     tokens: list[tuple[int, str, re.Match[str]]] = []
@@ -704,6 +730,8 @@ def prune_empty(theme: dict) -> dict | None:
 def build_node(node: Node, pages: dict[int, str], kjv: dict, report_lines: list[str]) -> dict:
     text = slice_text(pages_text(pages, node.start, node.end), node.start_marker, node.end_marker)
     refs = parse_refs(text, kjv)
+    if node.exclude:
+        refs = [ref for ref in refs if ref not in node.exclude]
     if node.curated:
         for item in node.curated:
             if item not in refs:
