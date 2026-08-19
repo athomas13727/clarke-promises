@@ -89,6 +89,18 @@ def main() -> int:
     assert titles["p1-c1-long-life-health"] == "Long life and health"
     assert titles["p1-c1-peace"] == "Promises of peace"
 
+    by_id = {}
+    for part in data["parts"]:
+        for chapter in part["chapters"]:
+            for theme in walk(chapter["themes"]):
+                by_id[theme["id"]] = theme
+    food_page = by_id["p1-c1-food-raiment"]
+    assert not food_page.get("verses"), "Food and raiment is a grouping head"
+    assert [c["id"] for c in food_page.get("children") or []] == ["p1-c1-food", "p1-c1-raiment"]
+    direction = by_id["p1-c1-direction"]
+    assert direction.get("verses"), "Direction must have verses"
+    assert not direction.get("children"), "Direction is a leaf — no fake subheads"
+
     access = search(data, "access")
     assert any(h["theme"]["id"] == "p1-c3-free-access" for h in access), access[:3]
 

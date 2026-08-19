@@ -184,7 +184,11 @@ struct ThemePageView: View {
             if let theme = catalog.theme(id: route.themeID) {
                 ThemeReader(theme: theme, route: route)
             } else {
-                ContentUnavailableView("Theme missing", systemImage: "book.closed")
+                Text("Theme missing")
+                    .font(AppAppearance.displaySerif(17))
+                    .foregroundStyle(AppAppearance.inkSecondary)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .readerChrome()
             }
         }
     }
@@ -194,106 +198,115 @@ private struct ThemeReader: View {
     let theme: CatalogTheme
     let route: ThemeRoute
     @Environment(CatalogStore.self) private var catalog
-    @Environment(\.dismiss) private var dismiss
+
+    @ScaledMetric(relativeTo: .caption2) private var chapterSize: CGFloat = 11
+    @ScaledMetric(relativeTo: .title2) private var titleSize: CGFloat = 22
+    @ScaledMetric(relativeTo: .caption) private var subheadSize: CGFloat = 12
 
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
+                    chapterCue
+
                     titleBlock
-                        .padding(.bottom, theme.verses.isEmpty ? 8 : 16)
+                        .padding(.top, 6)
 
                     if !theme.verses.isEmpty {
-                        verseColumn(theme.verses, heading: nil)
+                        verseStack(theme.verses)
+                            .padding(.top, 22)
                     }
 
-                    ForEach(theme.children) { child in
-                        childBlock(child)
+                    ForEach(Array(theme.children.enumerated()), id: \.element.id) { index, child in
+                        let beforeSubhead: CGFloat = (!theme.verses.isEmpty || index > 0) ? 32 : 22
+                        childGroup(child)
+                            .padding(.top, beforeSubhead)
                     }
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 22)
                 .padding(.top, 8)
-                .padding(.bottom, 48)
+                .padding(.bottom, 40)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .background(AppAppearance.parchment.ignoresSafeArea())
+            .scrollIndicators(.automatic)
             .onAppear {
                 scroll(using: proxy)
             }
         }
+        .readerChrome()
+        .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(false)
-        .toolbarBackground(AppAppearance.parchment, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Button {
-                    dismiss()
-                } label: {
-                    Text(catalog.locationLabel(for: theme))
-                        .font(AppAppearance.uiSans(11, weight: .semibold))
-                        .foregroundStyle(AppAppearance.locationPillText)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.75)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(AppAppearance.locationPillFill, in: Capsule())
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Back to contents, \(catalog.locationLabel(for: theme))")
-            }
+        .toolbar(.hidden, for: .tabBar)
+    }
+
+    @ViewBuilder
+    private var chapterCue: some View {
+        if let (_, chapter) = catalog.placement(of: theme) {
+            Text("Chapter \(chapter.number)")
+                .font(AppAppearance.uiSans(chapterSize))
+                .foregroundStyle(AppAppearance.inkSecondary)
         }
     }
 
     private var titleBlock: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            if let number = theme.number {
-                Text("\(number).  \(theme.title)")
-                    .font(AppAppearance.displaySerif(28))
-                    .foregroundStyle(AppAppearance.ink)
-            } else {
-                Text(theme.title)
-                    .font(AppAppearance.displaySerif(28))
-                    .foregroundStyle(AppAppearance.ink)
-            }
-        }
+        Text(pageTitle)
+            .font(AppAppearance.displaySerif(titleSize, weight: .semibold))
+            .foregroundStyle(AppAppearance.ink)
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func childBlock(_ child: CatalogTheme) -> some View {
+    private var pageTitle: String {
+        if let number = theme.number {
+            return "\(number). \(theme.title)"
+        }
+        return theme.title
+    }
+
+    private func childGroup(_ child: CatalogTheme) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(child.title.uppercased())
-                .font(AppAppearance.uiSans(11, weight: .medium))
-                .tracking(1.6)
-                .foregroundStyle(AppAppearance.inkSecondary)
-                .padding(.top, 20)
-                .padding(.bottom, 8)
+            subhead(child.title)
                 .id(child.id)
 
             if !child.verses.isEmpty {
-                verseColumn(child.verses, heading: nil)
+                verseStack(child.verses)
+                    .padding(.top, 12)
             }
 
-            ForEach(child.children) { grand in
-                Text(grand.title)
-                    .font(AppAppearance.uiSans(11, weight: .regular))
-                    .foregroundStyle(AppAppearance.inkSecondary)
-                    .padding(.top, 12)
-                    .padding(.bottom, 6)
-                    .padding(.leading, 20)
+            ForEach(Array(child.children.enumerated()), id: \.element.id) { index, grand in
+                subhead(grand.title)
                     .id(grand.id)
+                    .padding(.top, index == 0 && child.verses.isEmpty ? 12 : 32)
 
-                verseColumn(grand.verses, heading: nil)
-                    .padding(.leading, 20)
+                if !grand.verses.isEmpty {
+                    verseStack(grand.verses)
+                        .padding(.top, 12)
+                }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func verseColumn(_ verses: [CatalogVerse], heading: String?) -> some View {
-        VStack(alignment: .leading, spacing: 11) {
+    private func subhead(_ title: String) -> some View {
+        Text(title.uppercased())
+            .font(AppAppearance.displaySerif(subheadSize, weight: .semibold))
+            .tracking(1)
+            .foregroundStyle(AppAppearance.inkSecondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func verseStack(_ verses: [CatalogVerse]) -> some View {
+        VStack(alignment: .leading, spacing: 24) {
             ForEach(verses) { verse in
-                ReaderVerseBlock(verse: verse, emphasized: verse.id == route.highlightVerseID)
-                    .id(verse.id)
+                ReaderVerseBlock(
+                    verse: verse,
+                    themeID: theme.id,
+                    emphasized: verse.id == route.highlightVerseID
+                )
+                .id(verse.id)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func scroll(using proxy: ScrollViewProxy) {

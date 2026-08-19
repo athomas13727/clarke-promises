@@ -21,6 +21,10 @@ enum AppAppearance {
         .system(size: size, weight: .regular, design: .serif)
     }
 
+    static func citationSerif(_ size: CGFloat) -> Font {
+        .system(size: size, weight: .regular, design: .serif).italic()
+    }
+
     static func uiSans(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
         .system(size: size, weight: weight, design: .default)
     }
